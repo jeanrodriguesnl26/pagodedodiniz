@@ -1,3 +1,11 @@
 name = "pagode-do-diniz"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "./public"
+
+[vars]
+ADMIN_PASSWORD = "diniz2027"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pagode-do-diniz-db"
+database_id = "ff7ae390-3c0a-4f5a-9cc7-dbc480c2d93b"
