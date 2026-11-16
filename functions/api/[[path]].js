@@ -21,10 +21,14 @@ const json = (data, status = 200) =>
 
 const enc = new TextEncoder();
 
+function getAdminPassword(env) {
+  return (env && env.ADMIN_PASSWORD) ? String(env.ADMIN_PASSWORD).trim() : 'diniz2027';
+}
+
 async function hmacKey(env) {
   return crypto.subtle.importKey(
     'raw',
-    enc.encode('pd-token:' + env.ADMIN_PASSWORD),
+    enc.encode('pd-token:' + getAdminPassword(env)),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
     ['sign', 'verify']
@@ -55,8 +59,8 @@ async function isAdmin(request, env) {
 async function passwordMatches(input, env) {
   // comparação em tempo constante via HMAC
   const key = await crypto.subtle.importKey('raw', enc.encode('pd-login'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const a = new Uint8Array(await crypto.subtle.sign('HMAC', key, enc.encode(String(input))));
-  const b = new Uint8Array(await crypto.subtle.sign('HMAC', key, enc.encode(String(env.ADMIN_PASSWORD))));
+  const a = new Uint8Array(await crypto.subtle.sign('HMAC', key, enc.encode(String(input || '').trim())));
+  const b = new Uint8Array(await crypto.subtle.sign('HMAC', key, enc.encode(getAdminPassword(env))));
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
   return diff === 0;
