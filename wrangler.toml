@@ -1,9 +1,3 @@
 name = "pagode-do-diniz"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "./public"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "pagode-do-diniz-db"
-# Troque pelo ID gerado em: npx wrangler d1 create pagode-do-diniz-db
-database_id = "COLE-O-DATABASE-ID-AQUI"
