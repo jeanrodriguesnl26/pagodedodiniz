@@ -1,0 +1,2974 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagode do Diniz | Site Oficial & Agendamento de Shows</title>
+  <meta name="description" content="O melhor do samba e pagode para seu evento. Conheça a história do Pagode do Diniz, confira a agenda e solicite seu orçamento online.">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              450: '#F59E0B',
+              550: '#D97706',
+              650: '#B45309'
+            },
+            gold: {
+              100: '#FEF3C7',
+              200: '#FDE68A',
+              300: '#FCD34D',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+              800: '#92400E',
+              900: '#78350F'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['"Cabinet Grotesk"', 'Montserrat', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            'gold-glow': '0 0 25px -5px rgba(245, 158, 11, 0.35)',
+            'gold-glow-lg': '0 0 40px -5px rgba(245, 158, 11, 0.5)',
+            'stage-spot': '0 0 80px 20px rgba(217, 119, 6, 0.15)'
+          },
+          keyframes: {
+            pulseSlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.05)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' }
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulseSlow 6s ease-in-out infinite',
+            'float': 'float 4s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
+      overflow-x: hidden;
+    }
+    .font-heading {
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* Estilo de palco e luzes âmbar */
+    .stage-light-left {
+      background: radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.18) 0%, transparent 60%);
+    }
+    .stage-light-right {
+      background: radial-gradient(circle at 90% 10%, rgba(217, 119, 6, 0.22) 0%, transparent 55%);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #B45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-gradient-bg {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 60%, #92400E 100%);
+    }
+    .gold-border-glow {
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.15);
+    }
+    .gold-border-glow:hover {
+      border: 1px solid rgba(245, 158, 11, 0.6);
+      box-shadow: 0 0 30px -2px rgba(245, 158, 11, 0.35);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d97706;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen selection:bg-amber-500 selection:text-black">
+
+  <!-- Background Ambience & Stage Glows -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[140px] animate-pulse-slow"></div>
+    <div class="absolute top-1/3 -right-40 w-[550px] h-[550px] bg-yellow-600/10 rounded-full blur-[160px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-10 left-10 w-[500px] h-[500px] bg-amber-600/10 rounded-full blur-[150px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,53,15,0.25),rgba(255,255,255,0))]"></div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- ==================== 1. CABEÇALHO & NAVEGAÇÃO ==================== -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-zinc-950/85 border-b border-amber-500/20 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo da Banda -->
+        <a href="#hero" class="flex items-center gap-3 group focus:outline-none">
+          <div id="header-logo-container" class="relative flex items-center justify-center">
+            <!-- Renderizado via JS (Imagem ou Logo Estilizado) -->
+          </div>
+          <div class="flex flex-col">
+            <span id="header-brand-name" class="font-heading font-extrabold text-xl sm:text-2xl tracking-wider uppercase text-white group-hover:text-amber-400 transition-colors">
+              Pagode do Diniz
+            </span>
+            <span id="header-brand-tagline" class="text-[11px] uppercase tracking-widest text-amber-400/90 font-semibold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+              Samba & Pagode de Respeito
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <a href="#hero" class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-amber-400 hover:bg-zinc-900/60 transition-all">Início</a>
+          <a href="#historia" class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-amber-400 hover:bg-zinc-900/60 transition-all">Nossa História</a>
+          <a href="#integrantes" class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-amber-400 hover:bg-zinc-900/60 transition-all">Integrantes</a>
+          <a href="#galeria" class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-amber-400 hover:bg-zinc-900/60 transition-all">Mídia & Shows</a>
+          <a href="#agenda" class="px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-amber-400 hover:bg-zinc-900/60 transition-all">Agenda de Shows</a>
+          <a href="#orcamento" class="px-4 py-2 rounded-lg text-sm font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.22-1.31C8.63 21.49 10.27 22 12 22c5.52 0 10-4.48 10-10S17.52 2c-10 0-10 10-10 10zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z"/></svg>
+            Pedir Orçamento
+          </a>
+          <!-- Instagram Oficial da Banda -->
+          <a href="https://www.instagram.com/pagodedodiniz/" target="_blank" rel="noopener noreferrer" title="Instagram Oficial @pagodedodiniz" class="p-2.5 rounded-lg border border-zinc-800 hover:border-amber-500/50 text-zinc-400 hover:text-amber-400 bg-zinc-900/50 hover:bg-zinc-800 transition-all group">
+            <svg class="w-4 h-4 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <!-- Botão Painel Administrativo -->
+          <button onclick="openAdminModal()" title="Área Restrita da Banda" class="ml-2 p-2.5 rounded-lg border border-zinc-800 hover:border-amber-500/50 text-zinc-400 hover:text-amber-400 bg-zinc-900/50 hover:bg-zinc-800 transition-all group">
+            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </button>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <div class="flex items-center gap-2 md:hidden">
+          <button onclick="openAdminModal()" class="p-2 text-zinc-400 hover:text-amber-400 bg-zinc-900 rounded-lg border border-zinc-800">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </button>
+          <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 text-zinc-400 hover:text-white focus:outline-none">
+            <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2">
+      <a href="#hero" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-medium text-zinc-200 hover:bg-zinc-800 hover:text-amber-400">Início</a>
+      <a href="#historia" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-medium text-zinc-200 hover:bg-zinc-800 hover:text-amber-400">Nossa História</a>
+      <a href="#integrantes" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-medium text-zinc-200 hover:bg-zinc-800 hover:text-amber-400">Integrantes</a>
+      <a href="#galeria" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-medium text-zinc-200 hover:bg-zinc-800 hover:text-amber-400">Mídia & Shows</a>
+      <a href="#agenda" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-medium text-zinc-200 hover:bg-zinc-800 hover:text-amber-400">Agenda de Shows</a>
+      <a href="#orcamento" onclick="toggleMobileMenu()" class="block text-center py-2.5 rounded-lg text-base font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500">Pedir Orçamento Agora</a>
+      <a href="https://www.instagram.com/pagodedodiniz/" target="_blank" rel="noopener noreferrer" class="block px-3 py-2 rounded-lg text-sm font-semibold text-amber-400 hover:bg-zinc-800 flex items-center justify-between">
+        <span>Instagram Oficial (@pagodedodiniz)</span>
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <button onclick="toggleMobileMenu(); openAdminModal();" class="w-full text-left px-3 py-2 rounded-lg text-sm text-zinc-400 hover:bg-zinc-800 hover:text-amber-400 flex items-center justify-between">
+        <span>Painel Administrativo da Banda</span>
+        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION (DARK STAGE) ==================== -->
+  <section id="hero" class="relative z-10 pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs sm:text-sm font-semibold tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            A ENERGIA DO VERDADEIRO PAGODE NO SEU EVENTO
+          </div>
+          
+          <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[1.08]">
+            VIVA O MELHOR DO <br>
+            <span class="gold-gradient-text drop-shadow-md">SAMBA & PAGODE</span> <br>
+            COM O DINIZ
+          </h1>
+
+          <p class="text-zinc-400 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+            Do clássico partido alto ao pagode retrô anos 90 e sucessos atuais. Levamos para casamentos, aniversários, confraternizações e casas de show uma apresentação inesquecível, cheia de carisma e swing.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+            <a href="#agenda" class="w-full sm:w-auto px-8 py-4 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-300 hover:to-amber-400 shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Ver Calendário de Shows
+            </a>
+            <a href="#orcamento" class="w-full sm:w-auto px-8 py-4 rounded-xl font-heading font-semibold text-zinc-200 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-amber-500/40 transition-all flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.22-1.31C8.63 21.49 10.27 22 12 22c5.52 0 10-4.48 10-10S17.52 2c-10 0-10 10-10 10zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z"/></svg>
+              Solicitar Orçamento Rápido
+            </a>
+          </div>
+
+          <!-- Quick Metrics Banner -->
+          <div class="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800/80 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-heading" id="metric-years">+8 Anos</div>
+              <div class="text-xs text-zinc-400 uppercase tracking-wider font-medium">De Estrada</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-heading" id="metric-shows">+500</div>
+              <div class="text-xs text-zinc-400 uppercase tracking-wider font-medium">Shows Realizados</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-amber-400 font-heading">100%</div>
+              <div class="text-xs text-zinc-400 uppercase tracking-wider font-medium">Festa Garantida</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Stage Visual -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <div class="relative w-full max-w-md">
+            <!-- Glowing Ring Behind Card -->
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-amber-500 to-yellow-600 opacity-30 blur-xl"></div>
+            
+            <div class="relative rounded-3xl overflow-hidden bg-zinc-950 border-2 border-amber-500/40 shadow-2xl shadow-amber-500/20">
+              <div class="relative h-[430px] w-full overflow-hidden group bg-white flex items-center justify-center">
+                <img id="hero-feature-img" src="./assets/banda-principal.jpg" alt="Pagode do Diniz - Foto Oficial dos Componentes" class="w-full h-full object-contain p-2 transform group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent pt-12 pb-4 px-4 pointer-events-none"></div>
+                
+                <!-- Live Tag -->
+                <div class="absolute top-4 left-4 px-3.5 py-1 bg-amber-500 text-black text-xs font-black rounded-full tracking-wider uppercase flex items-center gap-1.5 shadow-lg">
+                  <span class="w-2 h-2 rounded-full bg-black animate-pulse"></span>
+                  Formação Oficial
+                </div>
+
+                <!-- Bottom Floating Player/Teaser -->
+                <div class="absolute bottom-4 left-4 right-4 p-3.5 rounded-xl bg-zinc-950/95 backdrop-blur-md border border-amber-500/30 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                      <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    </div>
+                    <div>
+                      <div class="text-xs sm:text-sm font-bold text-white">Robson • Alex • Davi</div>
+                      <div class="text-[11px] text-amber-400/90 font-medium">Violão, Bateria e Cavaco & Voz</div>
+                    </div>
+                  </div>
+                  <a href="#integrantes" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                    Conhecer
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative Badges -->
+            <div class="absolute -bottom-5 -left-5 bg-zinc-900 border border-amber-500/40 rounded-xl p-3 shadow-xl flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div class="text-xs">
+                <div class="font-bold text-white">Som Próprio Incluso</div>
+                <div class="text-zinc-400">Equipamento para até 70 pessoas</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2. SEÇÃO CONHEÇA NOSSA HISTÓRIA (EDITÁVEL) ==================== -->
+  <section id="historia" class="relative z-10 py-24 bg-zinc-900/60 border-y border-zinc-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-amber-400 uppercase">
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+          Tradição, Raiz & Respeito
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+        </div>
+        <h2 id="story-title-display" class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+          Conheça Nossa História
+        </h2>
+        <p id="story-subtitle-display" class="text-zinc-400 text-base sm:text-lg">
+          A paixão pelo pandeiro, cavaco e partido alto que se transformou em uma das formações de pagode mais queridas da região.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Story Image with Stage Glow -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-2xl group bg-white">
+            <img id="story-main-img" src="./assets/banda-principal.jpg" alt="Banda Pagode do Diniz - Foto Oficial com Componentes" class="w-full h-[460px] object-contain p-2 group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent pt-12 pb-4 px-6 pointer-events-none"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-zinc-950/90 backdrop-blur-md border border-amber-500/30">
+              <div class="font-heading font-bold text-amber-400 text-sm uppercase tracking-wider">A Linha de Frente do Pagode</div>
+              <div class="text-xs text-zinc-300 mt-0.5">Robson Reis, Alex Silva e Davi Diniz: unidos pela paixão do samba de raiz.</div>
+            </div>
+          </div>
+          <!-- Edit Shortcut for Admins -->
+          <button onclick="openAdminModal('tab-story')" class="mt-3 text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            Editar esta seção no Painel Admin
+          </button>
+        </div>
+
+        <!-- Story Institutional Text -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="p-8 rounded-2xl bg-zinc-950/80 border border-zinc-800/80 relative">
+            <div class="text-amber-500/20 absolute top-4 right-6 text-7xl font-serif select-none pointer-events-none">”</div>
+            
+            <div id="story-content-display" class="prose prose-invert max-w-none text-zinc-300 leading-relaxed text-base sm:text-lg space-y-4">
+              <!-- Preenchido via Javascript -->
+            </div>
+          </div>
+
+          <!-- Pillars / Diferenciais -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-amber-500/30 transition-colors flex items-start gap-3">
+              <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Repertório Personalizado</h4>
+                <p class="text-xs text-zinc-400 mt-1">Alinhamos as músicas preferidas do aniversariante ou dos noivos antes do show.</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-amber-500/30 transition-colors flex items-start gap-3">
+              <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Alegria Contagiante</h4>
+                <p class="text-xs text-zinc-400 mt-1">Interação do início ao fim com o público para transformar o evento em uma roda de samba inesquecível.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SEÇÃO INTEGRANTES DA BANDA ==================== -->
+  <section id="integrantes" class="relative z-10 py-24 bg-zinc-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-amber-400 uppercase">
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+          Nossa Linha de Frente
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+          Conheça os Integrantes
+        </h2>
+        <p class="text-zinc-400 text-base sm:text-lg">
+          Três trajetórias consagradas unidas pelo mesmo amor ao samba e pagode. Conheça a história e vivência de quem comanda o som do Pagode do Diniz.
+        </p>
+      </div>
+
+      <!-- Integrantes Grid (Cards estilo Social Stories dos músicos) -->
+      <div id="members-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <!-- Banner Oficial do Instagram da Banda & Sintonia do Trio -->
+      <div class="mt-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-500/15 via-zinc-900/90 to-amber-500/15 border border-amber-500/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-4 relative z-10">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 text-black flex items-center justify-center font-bold text-2xl shadow-lg shrink-0 shadow-amber-500/30">
+            <svg class="w-8 h-8 text-black fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider mb-1">
+              Instagram Oficial da Banda
+            </div>
+            <h4 class="font-heading font-black text-white text-lg sm:text-xl">Siga o @pagodedodiniz</h4>
+            <p class="text-zinc-400 text-xs sm:text-sm mt-0.5">Assista vídeos de shows ao vivo, bastidores de gravações e agenda completa em tempo real.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto relative z-10">
+          <a href="https://www.instagram.com/pagodedodiniz/" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none px-6 py-3.5 rounded-xl font-heading font-extrabold text-black bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-300 hover:to-amber-400 shadow-xl shadow-amber-500/25 whitespace-nowrap text-sm transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Seguir no Instagram
+          </a>
+          <a href="#orcamento" class="px-5 py-3.5 rounded-xl font-heading font-semibold text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/60 text-sm transition-all whitespace-nowrap">
+            Pedir Orçamento
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 3. GALERIA DE MÍDIA (FOTOS E VÍDEOS) ==================== -->
+  <section id="galeria" class="relative z-10 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-amber-400 uppercase mb-2">
+            <span class="w-4 h-0.5 bg-amber-400"></span>
+            Galeria de Momentos
+          </div>
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+            Fotos & Vídeos de Shows
+          </h2>
+          <p class="text-zinc-400 text-sm sm:text-base mt-2">
+            Confira a vibe dos nossos últimos eventos, palcos e rodas de samba.
+          </p>
+        </div>
+
+        <!-- Filter Buttons & Admin Shortcut -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterGallery('all')" id="filter-btn-all" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-500 text-black transition-all">Todos</button>
+          <button onclick="filterGallery('photo')" id="filter-btn-photo" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 transition-all">Fotos</button>
+          <button onclick="filterGallery('video')" id="filter-btn-video" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 transition-all">Vídeos</button>
+          <button onclick="openAdminModal('tab-media')" title="Adicionar mídia" class="p-2 rounded-lg bg-zinc-900 text-amber-400 hover:bg-zinc-800 border border-amber-500/30 ml-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Media Grid -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 4. CALENDÁRIO INTERATIVO & AGENDA DE SHOWS ==================== -->
+  <section id="agenda" class="relative z-10 py-24 bg-zinc-900/40 border-y border-zinc-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Title -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-amber-400 uppercase">
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+          Datas Disponíveis & Compromissos
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+          Calendário de Shows
+        </h2>
+        <p class="text-zinc-400 text-base sm:text-lg">
+          Consulte as datas livres da nossa agenda. <strong class="text-amber-400">Clique em qualquer dia livre</strong> para preencher automaticamente o formulário de orçamento!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Interactive Calendar Widget (7 cols) -->
+        <div class="lg:col-span-7 bg-zinc-950 rounded-2xl border border-zinc-800 p-6 sm:p-8 shadow-2xl">
+          
+          <!-- Calendar Header: Month Nav -->
+          <div class="flex items-center justify-between pb-6 mb-6 border-b border-zinc-800">
+            <div>
+              <h3 id="calendar-month-year" class="font-heading text-2xl font-extrabold uppercase text-white tracking-wide">
+                Novembro 2026
+              </h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Selecione uma data para solicitar seu show</p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button onclick="changeMonth(-1)" class="p-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-amber-400 border border-zinc-800 transition-colors" title="Mês Anterior">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button onclick="goToCurrentMonth()" class="px-3 py-2 text-xs font-bold rounded-lg bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-zinc-800 transition-colors">Hoje</button>
+              <button onclick="changeMonth(1)" class="p-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-amber-400 border border-zinc-800 transition-colors" title="Próximo Mês">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Weekday Labels -->
+          <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">
+            <div>Dom</div>
+            <div>Seg</div>
+            <div>Ter</div>
+            <div>Qua</div>
+            <div>Qui</div>
+            <div>Sex</div>
+            <div>Sáb</div>
+          </div>
+
+          <!-- Calendar Days Grid -->
+          <div id="calendar-days-grid" class="grid grid-cols-7 gap-2">
+            <!-- Gerado via Javascript -->
+          </div>
+
+          <!-- Calendar Legend -->
+          <div class="flex flex-wrap items-center justify-between gap-4 mt-6 pt-6 border-t border-zinc-800/80 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 inline-block"></span>
+              <span class="text-zinc-300">Data Livre (Clique p/ orçar)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-md bg-red-500/20 border border-red-500/50 inline-block"></span>
+              <span class="text-zinc-300">Data Ocupada / Show Marcado</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-md bg-amber-500 border border-amber-300 inline-block"></span>
+              <span class="text-zinc-300">Data Selecionada</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Next Shows List / Agenda Sidebar (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-zinc-950 rounded-2xl border border-zinc-800 p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                <h3 class="font-heading font-bold text-lg uppercase text-white">Próximos Shows Cadastrados</h3>
+              </div>
+              <button onclick="openAdminModal('tab-calendar')" class="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                Gerenciar
+              </button>
+            </div>
+
+            <div id="upcoming-shows-list" class="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+              <!-- Renderizado dinamicamente via JS -->
+            </div>
+          </div>
+
+          <!-- Quick Tip Card -->
+          <div class="bg-gradient-to-br from-amber-500/10 via-zinc-900 to-zinc-950 rounded-2xl border border-amber-500/20 p-5">
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-amber-400">Garanta a sua data com antecedência!</h4>
+                <p class="text-xs text-zinc-300 mt-1 leading-relaxed">
+                  As datas de sextas-feiras, sábados e domingos costumam esgotar rapidamente. Ao escolher um dia livre acima, seu formulário é pré-preenchido instantaneamente.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 5. FORMULÁRIO DE ORÇAMENTO & INTEGRAÇÃO WHATSAPP ==================== -->
+  <section id="orcamento" class="relative z-10 py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-12 space-y-3">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-amber-400 uppercase">
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+          Proposta Personalizada Sem Compromisso
+          <span class="w-4 h-0.5 bg-amber-400"></span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+          Solicite Seu Orçamento
+        </h2>
+        <p class="text-zinc-400 text-base max-w-xl mx-auto">
+          Preencha os detalhes do seu evento abaixo. Ao clicar em enviar, geramos uma mensagem formatada e abrimos o WhatsApp diretamente com a produção da banda!
+        </p>
+      </div>
+
+      <!-- Form Container Card -->
+      <div class="bg-zinc-950 rounded-2xl border border-amber-500/30 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        
+        <!-- Glow effect inside form -->
+        <div class="absolute -top-24 -right-24 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Informações do Show / Valor -->
+        <div class="relative mb-8 p-5 rounded-xl bg-amber-500/10 border border-amber-500/40 space-y-2 text-sm text-zinc-200 leading-relaxed">
+          <div class="font-heading font-extrabold text-amber-400 uppercase tracking-wide text-base">Como funciona o show</div>
+          <ul class="space-y-1.5">
+            <li>🎶 <strong class="text-white">Duração:</strong> 2 horas de show.</li>
+            <li>🔊 <strong class="text-white">Somente o som é por conta da banda:</strong> levamos todo o equipamento de som necessário, que atende até <strong class="text-white">70 pessoas</strong>. Não incluímos iluminação nem outras estruturas.</li>
+            <li>👥 Se o número de convidados for maior, avise-nos para realizarmos o complemento dos equipamentos de som.</li>
+            <li>💰 <strong class="text-white">Valor: R$ 2.100,00</strong> para Belo Horizonte e região.</li>
+          </ul>
+          <p class="text-xs text-amber-300/90 pt-1">⚠️ O valor pode ser alterado na negociação pelo WhatsApp (data, local, duração e estrutura).</p>
+        </div>
+
+        <!-- Selected Date Banner -->
+        <div id="selected-date-alert" class="hidden mb-6 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-between animate-fade-in">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span class="text-xs sm:text-sm text-zinc-200">Data selecionada no calendário: <strong id="selected-date-text" class="text-amber-400 font-bold">--/--/----</strong> (Disponível!)</span>
+          </div>
+          <button type="button" onclick="clearSelectedDate()" class="text-xs text-zinc-400 hover:text-white underline">Limpar</button>
+        </div>
+
+        <form id="quote-form" onsubmit="handleQuoteSubmit(event)" class="space-y-6">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            <!-- Nome do Contratante -->
+            <div>
+              <label for="quote-name" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Nome do Contratante *
+              </label>
+              <div class="relative">
+                <input type="text" id="quote-name" required placeholder="Ex: Roberto Carlos / Marina Silva" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+              </div>
+            </div>
+
+            <!-- WhatsApp do Contratante -->
+            <div>
+              <label for="quote-phone" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Seu WhatsApp de Contato *
+              </label>
+              <input type="tel" id="quote-phone" required placeholder="(DDD) 99999-9999" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+            </div>
+
+            <!-- Data do Evento -->
+            <div>
+              <label for="quote-date" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Data do Evento *
+              </label>
+              <input type="date" id="quote-date" required class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm" onchange="syncDateFromInput(this.value)">
+            </div>
+
+            <!-- Horário Desejado -->
+            <div>
+              <label for="quote-time" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Horário Previsto de Início *
+              </label>
+              <input type="time" id="quote-time" required value="17:00" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+            </div>
+
+            <!-- Duração Estimada do Show -->
+            <div>
+              <label for="quote-duration" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Duração Desejada do Show *
+              </label>
+              <select id="quote-duration" required class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+                <option value="2 horas de show" selected>2 horas de show (duração padrão)</option>
+                <option value="Mais de 2 horas de show (valor a combinar)">Mais de 2 horas (valor a combinar)</option>
+              </select>
+            </div>
+
+            <!-- Tipo de Evento -->
+            <div>
+              <label for="quote-event-type" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Tipo de Evento *
+              </label>
+              <select id="quote-event-type" required class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+                <option value="Aniversário / Festa Privada" selected>Aniversário / Festa Privada</option>
+                <option value="Casamento">Casamento</option>
+                <option value="Confraternização Empresarial">Confraternização Empresarial</option>
+                <option value="Bar / Restaurante / Casa de Show">Bar / Restaurante / Casa Noturna</option>
+                <option value="Formatura / Festa Universitária">Formatura</option>
+                <option value="Festival / Evento Público">Festival / Evento Público</option>
+              </select>
+            </div>
+
+            <!-- Estimativa de Pessoas -->
+            <div>
+              <label for="quote-guests" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Estimativa de Pessoas / Convidados *
+              </label>
+              <select id="quote-guests" required class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+                <option value="Até 70 pessoas (som da banda atende)" selected>Até 70 pessoas (som da banda atende)</option>
+                <option value="Mais de 70 pessoas (precisa de complemento de som)">Mais de 70 pessoas (precisa de complemento de som)</option>
+              </select>
+            </div>
+
+            <!-- Estrutura de Som -->
+            <div>
+              <label for="quote-sound" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                Equipamento de Som
+              </label>
+              <select id="quote-sound" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+                <option value="A banda leva o som (padrão)" selected>A banda leva o som (padrão)</option>
+                <option value="O local já possui som e operador">O local já tem som/técnico</option>
+                <option value="Ainda a definir com o espaço">Ainda a definir</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Local do Evento -->
+          <div>
+            <label for="quote-location" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+              Local do Evento (Endereço, Bairro e Cidade) *
+            </label>
+            <input type="text" id="quote-location" required placeholder="Ex: Espaço Villa Real - Bairro Jardins, Belo Horizonte/MG" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+          </div>
+
+          <!-- Observações Adicionais -->
+          <div>
+            <label for="quote-notes" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+              Observações Especiais ou Músicas Indispensáveis (Opcional)
+            </label>
+            <textarea id="quote-notes" rows="3" placeholder="Conte mais detalhes sobre a festa, horário de montagem ou se há alguma música especial para o repertório..." class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm"></textarea>
+          </div>
+
+          <!-- Botão de Envio WhatsApp -->
+          <div class="pt-4">
+            <button type="submit" class="w-full py-4 px-6 rounded-xl font-heading font-extrabold text-base sm:text-lg text-black bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-300 hover:to-amber-400 shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3">
+              <svg class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.11 7.15C8.94 7.15 8.67 7.21 8.44 7.46C8.21 7.71 7.56 8.32 7.56 9.58C7.56 10.84 8.48 12.05 8.61 12.22C8.74 12.39 10.42 15.08 13.06 16.12C15.26 16.99 15.7 16.81 16.17 16.77C16.64 16.73 17.69 16.15 17.91 15.53C18.13 14.9 18.13 14.37 18.06 14.25C18 14.14 17.82 14.07 17.56 13.94C17.3 13.81 16.02 13.18 15.78 13.09C15.55 13 15.38 12.96 15.21 13.21C15.04 13.46 14.55 14.04 14.4 14.21C14.25 14.38 14.1 14.4 13.84 14.27C13.58 14.14 12.75 13.87 11.76 12.99C10.99 12.3 10.47 11.45 10.32 11.2C10.17 10.94 10.3 10.8 10.43 10.67C10.55 10.55 10.7 10.36 10.83 10.21C10.96 10.06 11 9.95 11.09 9.78C11.18 9.61 11.13 9.47 11.07 9.34C11 9.21 10.51 8.01 10.31 7.52C10.11 7.05 9.91 7.11 9.76 7.11L9.11 7.15Z"/>
+              </svg>
+              <span>Gerar e Enviar Orçamento via WhatsApp</span>
+            </button>
+            <p class="text-center text-xs text-zinc-500 mt-3 flex items-center justify-center gap-1">
+              <svg class="w-3.5 h-3.5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Seus dados são protegidos e enviados diretamente ao WhatsApp oficial da banda.
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="relative z-10 bg-zinc-950 border-t border-zinc-800/80 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        
+        <!-- Coluna 1: Sobre -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div id="footer-logo-container"></div>
+            <div>
+              <div class="font-heading font-extrabold text-xl text-white uppercase" id="footer-brand-name">Pagode do Diniz</div>
+              <div class="text-xs text-amber-400 font-semibold tracking-wider">A batucada que emociona</div>
+            </div>
+          </div>
+          <p class="text-zinc-400 text-sm max-w-md leading-relaxed">
+            Levando o melhor do samba de raiz, partido alto e clássicos do pagode para todo o Brasil. Produção estruturada com carisma, pontualidade e excelência musical.
+          </p>
+        </div>
+
+        <!-- Coluna 2: Links Rápidos -->
+        <div>
+          <h4 class="font-heading font-bold text-sm text-white uppercase tracking-wider mb-4">Navegação</h4>
+          <ul class="space-y-2 text-sm text-zinc-400">
+            <li><a href="#hero" class="hover:text-amber-400 transition-colors">Início</a></li>
+            <li><a href="#historia" class="hover:text-amber-400 transition-colors">Nossa História</a></li>
+            <li><a href="#integrantes" class="hover:text-amber-400 transition-colors">Integrantes</a></li>
+            <li><a href="#galeria" class="hover:text-amber-400 transition-colors">Galeria de Mídia</a></li>
+            <li><a href="#agenda" class="hover:text-amber-400 transition-colors">Calendário & Shows</a></li>
+            <li><a href="#orcamento" class="hover:text-amber-400 transition-colors">Pedir Orçamento</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Contato & Produção -->
+        <div>
+          <h4 class="font-heading font-bold text-sm text-white uppercase tracking-wider mb-4">Produção & Contato</h4>
+          <ul class="space-y-2.5 text-sm text-zinc-400">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.22-1.31C8.63 21.49 10.27 22 12 22c5.52 0 10-4.48 10-10S17.52 2c-10 0-10 10-10 10z"/></svg>
+              <span id="footer-phone-display">(11) 98765-4321</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>contato@pagodedodiniz.com.br</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <a href="https://www.instagram.com/pagodedodiniz/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">@pagodedodiniz</a>
+            </li>
+            <li class="pt-2">
+              <button onclick="openAdminModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-xs text-amber-400 border border-zinc-800 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Acessar Painel da Banda
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-zinc-800/80 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
+        <p>&copy; <span id="current-year">2026</span> Pagode do Diniz. Todos os direitos reservados.</p>
+        <p class="text-zinc-500">Desenvolvido com tecnologia moderna para o samba brasileiro.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MÚSICA DE FUNDO ==================== -->
+  <audio id="bg-music" src="./assets/audio.mp3" loop preload="auto"></audio>
+  <button id="bg-music-btn" type="button" onclick="toggleBgMusic()" class="fixed bottom-6 left-6 z-40 flex items-center gap-2 pl-3 pr-4 py-3 rounded-full bg-zinc-950/90 backdrop-blur border border-amber-500/50 text-amber-400 shadow-2xl shadow-amber-500/20 hover:bg-zinc-900 hover:scale-105 active:scale-95 transition-all" title="Ligar/desligar música de fundo">
+    <span id="bg-music-icon" class="w-5 h-5 flex items-center justify-center"></span>
+    <span id="bg-music-label" class="text-xs font-bold uppercase tracking-wider">Música</span>
+  </button>
+
+  <!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
+  <a id="floating-whatsapp-btn" href="#orcamento" class="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-2xl shadow-amber-500/50 hover:scale-110 active:scale-95 transition-all flex items-center justify-center group" title="Orçamento Rápido via WhatsApp">
+    <svg class="w-7 h-7 text-black fill-current" viewBox="0 0 24 24">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.11 7.15C8.94 7.15 8.67 7.21 8.44 7.46C8.21 7.71 7.56 8.32 7.56 9.58C7.56 10.84 8.48 12.05 8.61 12.22C8.74 12.39 10.42 15.08 13.06 16.12C15.26 16.99 15.7 16.81 16.17 16.77C16.64 16.73 17.69 16.15 17.91 15.53C18.13 14.9 18.13 14.37 18.06 14.25C18 14.14 17.82 14.07 17.56 13.94C17.3 13.81 16.02 13.18 15.78 13.09C15.55 13 15.38 12.96 15.21 13.21C15.04 13.46 14.55 14.04 14.4 14.21C14.25 14.38 14.1 14.4 13.84 14.27C13.58 14.14 12.75 13.87 11.76 12.99C10.99 12.3 10.47 11.45 10.32 11.2C10.17 10.94 10.3 10.8 10.43 10.67C10.55 10.55 10.7 10.36 10.83 10.21C10.96 10.06 11 9.95 11.09 9.78C11.18 9.61 11.13 9.47 11.07 9.34C11 9.21 10.51 8.01 10.31 7.52C10.11 7.05 9.91 7.11 9.76 7.11L9.11 7.15Z"/>
+    </svg>
+    <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out font-bold text-sm pl-0 group-hover:pl-2 text-black">
+      Orçamento WhatsApp
+    </span>
+  </a>
+
+  <!-- ==================== MODAL DE AUTENTICAÇÃO / LOGIN DO ADMIN ==================== -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+    <div class="bg-zinc-950 border border-amber-500/40 rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <h3 class="font-heading font-extrabold text-2xl text-white uppercase">Área Restrita da Banda</h3>
+        <p class="text-xs text-zinc-400 mt-1">Apenas membros e produção autorizados</p>
+      </div>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">Senha de Acesso</label>
+          <input type="password" id="admin-password-input" required autocomplete="current-password" placeholder="Digite sua senha..." class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-sm">
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-500/20">
+          Entrar no Painel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 3. PAINEL ADMINISTRATIVO MODAL COM ABAS ==================== -->
+  <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="bg-zinc-950 border border-amber-500/40 rounded-2xl w-full max-w-5xl h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+      
+      <!-- Admin Modal Header -->
+      <div class="px-6 py-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/60">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-lg sm:text-xl text-white uppercase tracking-wider">Painel Administrativo da Banda</h3>
+            <p class="text-xs text-amber-400 font-medium">Controle de Conteúdo, Mídia & Bloqueio de Agenda</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="logoutAdmin()" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs text-zinc-300 hover:text-white transition-colors">
+            Sair
+          </button>
+          <button onclick="closeAdminDashboard()" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Tab Navigation -->
+      <div class="flex border-b border-zinc-800 bg-zinc-950 px-6 gap-2 sm:gap-4 overflow-x-auto">
+        <button onclick="switchAdminTab('tab-logo')" id="btn-tab-logo" class="py-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-amber-500 text-amber-400 whitespace-nowrap flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          1. Identidade & Logotipo
+        </button>
+        <button onclick="switchAdminTab('tab-story')" id="btn-tab-story" class="py-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          2. História & Foto
+        </button>
+        <button onclick="switchAdminTab('tab-members')" id="btn-tab-members" class="py-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          3. Integrantes da Banda
+        </button>
+        <button onclick="switchAdminTab('tab-media')" id="btn-tab-media" class="py-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          4. Galeria (Fotos & Vídeos)
+        </button>
+        <button onclick="switchAdminTab('tab-calendar')" id="btn-tab-calendar" class="py-3 px-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          5. Agenda & Bloqueio de Datas
+        </button>
+      </div>
+
+      <!-- Admin Tab Content Body -->
+      <div class="flex-1 overflow-y-auto p-6 bg-zinc-950/70">
+        
+        <!-- ================= TAB 1: IDENTIDADE & LOGOTIPO ================= -->
+        <div id="tab-logo" class="space-y-6">
+          <div class="bg-zinc-900/60 rounded-xl border border-zinc-800 p-6 space-y-6">
+            <div>
+              <h4 class="font-heading font-bold text-lg text-white">Logotipo Personalizado da Banda</h4>
+              <p class="text-xs text-zinc-400">Faça o upload de uma imagem (PNG com fundo transparente recomendado) ou use uma URL externa.</p>
+            </div>
+
+            <!-- Current Logo Preview -->
+            <div class="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <div id="admin-logo-preview" class="w-24 h-24 rounded-2xl bg-zinc-900 border border-amber-500/30 flex items-center justify-center p-2 overflow-hidden shadow-lg">
+                <!-- Preview JS -->
+              </div>
+              <div class="space-y-2 text-center sm:text-left">
+                <div class="text-sm font-bold text-white">Visualização Atual</div>
+                <p class="text-xs text-zinc-400">Este logo aparecerá no cabeçalho e rodapé do site.</p>
+                <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+                  <label class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold cursor-pointer transition-colors">
+                    Fazer Upload de Imagem
+                    <input type="file" id="logo-file-input" accept="image/*" class="hidden" onchange="handleLogoFileUpload(event)">
+                  </label>
+                  <button type="button" onclick="resetToDefaultLogo()" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors">
+                    Usar Emblema Padrão
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- URL Alternativa -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Ou insira a URL direta do Logotipo</label>
+              <div class="flex gap-2">
+                <input type="url" id="admin-logo-url-input" placeholder="https://exemplo.com/logo-pagode.png" class="flex-1 px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                <button type="button" onclick="saveLogoUrl()" class="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-amber-400 text-xs font-bold transition-colors">
+                  Aplicar URL
+                </button>
+              </div>
+            </div>
+
+            <!-- Dados Gerais da Banda -->
+            <div class="border-t border-zinc-800 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Nome da Banda</label>
+                <input type="text" id="admin-band-name-input" value="Pagode do Diniz" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Slogan / Subtítulo</label>
+                <input type="text" id="admin-band-tagline-input" value="Samba & Pagode de Respeito" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">WhatsApp de Destino dos Orçamentos (apenas dígitos)</label>
+                <input type="text" id="admin-whatsapp-number-input" placeholder="Ex: 5511987654321" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Senha do Painel</label>
+                <p class="px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs leading-relaxed">A senha é guardada com segurança no servidor (Cloudflare). Para trocá-la, veja o arquivo LEIA-ME-PUBLICAR.md.</p>
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button type="button" onclick="saveGeneralSettings()" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md">
+                Salvar Configurações Gerais
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 2: HISTÓRIA & FOTO ================= -->
+        <div id="tab-story" class="hidden space-y-6">
+          <div class="bg-zinc-900/60 rounded-xl border border-zinc-800 p-6 space-y-6">
+            <div>
+              <h4 class="font-heading font-bold text-lg text-white">Editar Seção "Nossa História"</h4>
+              <p class="text-xs text-zinc-400">Atualize o texto institucional e a foto de destaque que contam a história da banda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Título da Seção</label>
+                <input type="text" id="admin-story-title-input" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Subtítulo / Chamada</label>
+                <input type="text" id="admin-story-subtitle-input" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+            </div>
+
+            <!-- Foto Principal da História -->
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-4">
+              <div class="text-xs font-bold uppercase tracking-wider text-zinc-300">Foto Principal da História</div>
+              <div class="flex flex-col sm:flex-row items-center gap-4">
+                <img id="admin-story-img-preview" src="" alt="Preview História" class="w-28 h-28 object-cover rounded-xl border border-amber-500/30">
+                <div class="flex-1 space-y-2 w-full">
+                  <div class="flex gap-2">
+                    <input type="url" id="admin-story-img-url" placeholder="URL da foto..." class="flex-1 px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                    <button type="button" onclick="applyStoryImgUrl()" class="px-3 py-2 rounded-xl bg-zinc-800 text-amber-400 text-xs font-bold">Aplicar</button>
+                  </div>
+                  <div>
+                    <label class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold cursor-pointer inline-block">
+                      Ou Fazer Upload do Computador
+                      <input type="file" accept="image/*" class="hidden" onchange="handleStoryFileUpload(event)">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Texto Institucional Completo -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Texto Institucional (Suporta múltiplos parágrafos)</label>
+              <textarea id="admin-story-text-input" rows="7" class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm leading-relaxed focus:outline-none focus:border-amber-500"></textarea>
+            </div>
+
+            <!-- Métricas Editáveis -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Métrica: Anos de Estrada</label>
+                <input type="text" id="admin-metric-years-input" value="+8 Anos" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Métrica: Shows Realizados</label>
+                <input type="text" id="admin-metric-shows-input" value="+500" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button type="button" onclick="saveStorySettings()" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md">
+                Salvar História
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 3: INTEGRANTES DA BANDA ================= -->
+        <div id="tab-members" class="hidden space-y-6">
+          <div class="bg-zinc-900/60 rounded-xl border border-zinc-800 p-6 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h4 class="font-heading font-bold text-lg text-white">Editar Integrantes da Banda</h4>
+                <p class="text-xs text-zinc-400">Edite as biografias, fotos e redes sociais de Davi Diniz, Robson Reis e Alex Silva.</p>
+              </div>
+              <button type="button" onclick="saveMembersSettings()" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md">
+                Salvar Todos os Integrantes
+              </button>
+            </div>
+
+            <div id="admin-members-list" class="space-y-6">
+              <!-- Renderizado dinamicamente via JS -->
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button type="button" onclick="saveMembersSettings()" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md">
+                Salvar Todos os Integrantes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 4: GALERIA DE MÍDIA ================= -->
+        <div id="tab-media" class="hidden space-y-6">
+          <!-- Formulário para Adicionar Mídia -->
+          <div class="bg-zinc-900/60 rounded-xl border border-zinc-800 p-6 space-y-4">
+            <h4 class="font-heading font-bold text-lg text-white">Adicionar Nova Foto ou Vídeo</h4>
+            
+            <form id="add-media-form" onsubmit="handleAddMedia(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Tipo de Mídia</label>
+                  <select id="new-media-type" onchange="toggleMediaInputType(this.value)" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                    <option value="photo">Foto</option>
+                    <option value="video">Vídeo (YouTube)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Título / Legenda</label>
+                  <input type="text" id="new-media-title" required placeholder="Ex: Roda de Samba no Boteco Boa Praça" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+              </div>
+
+              <!-- Input Condicional de Foto -->
+              <div id="photo-input-group" class="space-y-3">
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300">Imagem</label>
+                <div class="flex flex-col sm:flex-row gap-3 items-center">
+                  <input type="url" id="new-media-url" placeholder="URL da foto (ex: https://...)" class="flex-1 px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                  <span class="text-xs text-zinc-500">OU</span>
+                  <label class="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-amber-400 text-xs font-bold cursor-pointer transition-colors whitespace-nowrap">
+                    Upload de Foto
+                    <input type="file" id="new-media-file" accept="image/*" class="hidden" onchange="handleMediaFileUpload(event)">
+                  </label>
+                </div>
+              </div>
+
+              <!-- Input Condicional de Vídeo -->
+              <div id="video-input-group" class="hidden space-y-3">
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300">Link do YouTube</label>
+                <input type="url" id="new-video-url" placeholder="https://www.youtube.com/watch?v=... ou https://youtu.be/..." class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                <p class="text-xs text-zinc-500">Aceita links comuns do YouTube e Shorts.</p>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="submit" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md">
+                  Adicionar à Galeria
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Lista de Itens Existentes na Galeria -->
+          <div>
+            <h4 class="font-heading font-bold text-base text-white mb-3">Mídias Atuais na Galeria (<span id="media-count-badge">0</span>)</h4>
+            <div id="admin-media-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Renderizado via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 4: AGENDA DE SHOWS & BLOQUEIO ================= -->
+        <div id="tab-calendar" class="hidden space-y-6">
+          
+          <!-- Formulário para Cadastrar Show / Bloquear Data -->
+          <div class="bg-zinc-900/60 rounded-xl border border-zinc-800 p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-heading font-bold text-lg text-white">Cadastrar Show na Agenda</h4>
+                <p class="text-xs text-zinc-400">Cadastre o show como <strong class="text-amber-400">público</strong> ou <strong class="text-amber-400">particular</strong> e aprove quando estiver fechado — só então a data é <strong class="text-red-400">bloqueada</strong> no calendário público.</p>
+              </div>
+            </div>
+
+            <form id="add-show-form" onsubmit="handleAddShow(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Data do Show *</label>
+                  <input type="date" id="new-show-date" required class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Cidade / Estado (opcional)</label>
+                  <input type="text" id="new-show-city" placeholder="Ex: Belo Horizonte / MG" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Horário</label>
+                  <input type="text" id="new-show-time" placeholder="Ex: 21:00" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Local ou Nome do Evento *</label>
+                  <input type="text" id="new-show-venue" required placeholder="Ex: Bar do Zé / Casamento da Maria" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Tipo do Evento</label>
+                  <select id="new-show-visibility" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                    <option value="public">Show Público (aparece na agenda com local)</option>
+                    <option value="private">Evento Particular (aparece só como "Evento Particular")</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Situação da Data</label>
+                  <select id="new-show-confirmed" class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                    <option value="confirmed">Fechado / Aprovado (bloqueia a data no calendário)</option>
+                    <option value="pending">Em negociação (NÃO bloqueia a data)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Observação interna (opcional)</label>
+                  <input type="text" id="new-show-notes" placeholder="Ex: contratante, valor combinado..." class="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:outline-none focus:border-amber-500">
+                  <p class="text-[10px] text-zinc-500 mt-1">Visível somente aqui no painel.</p>
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="submit" class="px-6 py-2.5 rounded-xl font-heading font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-sm shadow-md flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                  Salvar Show na Agenda
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Lista de Shows Cadastrados -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-heading font-bold text-base text-white">Shows Atualmente Cadastrados (<span id="shows-count-badge">0</span>)</h4>
+              <span class="text-xs text-zinc-400">Só datas "Fechadas" ficam indisponíveis para orçamentos</span>
+            </div>
+            
+            <div class="bg-zinc-900/40 rounded-xl border border-zinc-800 overflow-hidden">
+              <div id="admin-shows-table" class="divide-y divide-zinc-800">
+                <!-- Renderizado via JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE VISUALIZAÇÃO DE MÍDIA (LIGHTBOX) ==================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onclick="closeLightbox(event)">
+    <div class="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center">
+      <button onclick="closeLightbox(null, true)" class="absolute -top-12 right-0 text-zinc-400 hover:text-white p-2">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div id="lightbox-content" class="w-full flex items-center justify-center"></div>
+      <div id="lightbox-caption" class="text-center text-sm font-semibold text-white mt-3 bg-zinc-950/80 px-4 py-2 rounded-lg border border-zinc-800"></div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    /* =========================================================
+       1. ESTADO DA APLICAÇÃO & DADOS PADRÃO (LOCALSTORAGE)
+    ========================================================= */
+    const ADMIN_TOKEN_KEY = 'pagode_do_diniz_admin_token';
+
+    // Dados padrão pré-carregados
+    const defaultData = {
+      settings: {
+        bandName: 'Pagode do Diniz',
+        tagline: 'Samba & Pagode de Respeito',
+        whatsappPhone: '5511987654321', // Número padrão
+        customLogoUrl: './assets/logo.jpg', // Logotipo Oficial
+        bandInstagram: 'https://www.instagram.com/pagodedodiniz/',
+        bandInstagramHandle: '@pagodedodiniz',
+      },
+      story: {
+        title: 'Conheça Nossa História',
+        subtitle: 'A batucada nascida da união de Davi Diniz, Robson Reis e Alex Silva.',
+        mainPhoto: './assets/banda-principal.jpg', // Foto Oficial com os Componentes
+        content: `Formada pela união dos experientes músicos **Davi Diniz, Robson Reis e Alex Silva**, a banda **Pagode do Diniz** nasceu do encontro de grandes amizades e da paixão visceral pelo autêntico samba brasileiro. Inicialmente concebida com a ideia de convidar diferentes cantores para cada apresentação, a banda evoluiu organicamente para um grupo fixo e coeso após a sintonia impecável observada nos primeiros palcos.
+
+Com vasta bagagem musical acumulada ao lado de ícones do samba nacional — como Reinaldo, Salgadinho, Mumuzinho, Chrigor e Toninho Geraes —, o trio reúne a cadência do cavaco e a voz emotiva de Davi Diniz, as melodias marcantes do violão de Robson Reis e a versatilidade rítmica de Alex Silva na bateria e percussão.
+
+Do samba de raiz e partido alto ao pagode dos anos 90 e grandes sucessos atuais, nossa missão é transformar cada evento em uma verdadeira roda de samba com energia contagiante e qualidade musical inquestionável.`,
+        metricYears: '+8 Anos',
+        metricShows: '+500'
+      },
+      members: [
+        {
+          id: 'm1',
+          name: 'Davi Diniz',
+          handle: '@ddiniz1',
+          instagramUrl: 'https://www.instagram.com/ddiniz1/',
+          role: 'Cavaquinista & Vocalista',
+          roleIcon: '🎤',
+          photo: './assets/members/davi-diniz.jpg',
+          bio: 'Cresci rodeado de música, inspirado pelo meu avô, músico apaixonado, e por minha mãe e tias, que cantavam junto com ele. Nesse ambiente, nasceu minha paixão pela música. Durante minha trajetória, toquei com diversos artistas nacionais e regionais, destacando o grupo Purarmonia. Embora pagode e samba sejam minhas maiores paixões, aprecio todos os estilos musicais. Hoje sou cavaquinista e vocalista da banda Pagode do Diniz, formada com Alex e Robson. Inicialmente, a ideia era convidar diferentes cantores para cada show, mas evoluímos para um grupo fixo, dando continuidade ao sonho.'
+        },
+        {
+          id: 'm2',
+          name: 'Robson Reis',
+          handle: '@reisrobson2014',
+          instagramUrl: 'https://www.instagram.com/reisrobson2014/',
+          role: 'Violão & Harmonia',
+          roleIcon: '🎸',
+          photo: './assets/members/robson-reis.jpg',
+          bio: 'Comecei na música aos 13 anos, participando de um coral, onde aprendi violão com Marquinhos Barroso. Formei a dupla sertaneja Robson & Wagner com meu irmão, mas paramos em 1996 devido a questões políticas da época. Após um período afastado, fui convidado pelo amigo Xandão para integrar o Juventude do Samba, iniciando minha trajetória no pagode. Desde então, participei de vários projetos, como 7 Irmãos, Olosujos, Grupo K+, Na Balada, Bruno Silva, Samba Groove e Anderson De Paula. Hoje, integro o Pagode do Diniz, projeto criado junto com Alex Silva e Davi Diniz'
+        },
+        {
+          id: 'm3',
+          name: 'Alex Silva',
+          handle: '@alexsilvabatera',
+          instagramUrl: 'https://www.instagram.com/alexsilvabatera/',
+          role: 'Bateria & Percussão Geral',
+          roleIcon: '🥁',
+          photo: './assets/members/alex-silva.jpg',
+          bio: 'Alexander Silva Malaquias iniciou sua jornada musical aos 7 anos, aprendendo repique de mão com seu tio. Com o tempo, expandiu suas habilidades para diversos instrumentos, como surdo, pandeiro, cavaquinho, guitarra, baixo e bateria. Ao longo de sua trajetória, participou de escolas de samba e blocos, como Unidos do Rosário e Olosujos, além de acompanhar artistas renomados, incluindo Reinaldo, Salgadinho, Mumuzinho, Chrigor e Toninho Geraes. Ele integrou várias bandas, como 7 Irmãos, K+, Os Neguinhos, Daquele Jeito e Da Hora, acumulando experiência e versatilidade musical.'
+        }
+      ],
+      gallery: [
+        {
+          id: 'g0',
+          type: 'photo',
+          title: 'Foto Oficial - Pagode do Diniz (Robson Reis, Alex Silva & Davi Diniz)',
+          url: './assets/banda-principal.jpg'
+        },
+        {
+          id: 'v01',
+          type: 'video',
+          title: 'Roda de Samba e Energia Pura ao Vivo',
+          url: './assets/videos/video-show-01.mp4',
+          thumbnail: './assets/gallery/foto-show-01.jpg'
+        },
+        {
+          id: 'v02',
+          type: 'video',
+          title: 'Swingue e Batucada do Pagode do Diniz',
+          url: './assets/videos/video-show-02.mp4',
+          thumbnail: './assets/gallery/foto-show-02.jpg'
+        },
+        {
+          id: 'v03',
+          type: 'video',
+          title: 'Harmonia de Cordas: Solo de Cavaquinho',
+          url: './assets/videos/video-show-03.mp4',
+          thumbnail: './assets/gallery/foto-show-03.jpg'
+        },
+        {
+          id: 'v04',
+          type: 'video',
+          title: 'Energia Contagiante no Palco',
+          url: './assets/videos/video-show-04.mp4',
+          thumbnail: './assets/gallery/foto-show-04.jpg'
+        },
+        {
+          id: 'v05',
+          type: 'video',
+          title: 'Pagode de Raiz: Clássicos e Improviso',
+          url: './assets/videos/video-show-05.mp4',
+          thumbnail: './assets/gallery/foto-show-05.jpg'
+        },
+        {
+          id: 'v06',
+          type: 'video',
+          title: 'Samba no Pé com o Público',
+          url: './assets/videos/video-show-06.mp4',
+          thumbnail: './assets/gallery/foto-show-06.jpg'
+        },
+        {
+          id: 'v07',
+          type: 'video',
+          title: 'Batucada Firme e Percussão Pesada',
+          url: './assets/videos/video-show-07.mp4',
+          thumbnail: './assets/gallery/foto-show-07.jpg'
+        },
+        {
+          id: 'v08',
+          type: 'video',
+          title: 'Sucesso dos Palcos ao Vivo',
+          url: './assets/videos/video-show-08.mp4',
+          thumbnail: './assets/gallery/foto-show-08.jpg'
+        },
+        {
+          id: 'v09',
+          type: 'video',
+          title: 'A Voz do Povo Cantando Junto',
+          url: './assets/videos/video-show-09.mp4',
+          thumbnail: './assets/gallery/foto-show-09.jpg'
+        },
+        {
+          id: 'v10',
+          type: 'video',
+          title: 'Show Intenso: Muita Emoção e Pagode',
+          url: './assets/videos/video-show-10.mp4',
+          thumbnail: './assets/gallery/foto-show-10.jpg'
+        },
+        {
+          id: 'v11',
+          type: 'video',
+          title: 'Clássicos dos Anos 90 ao Vivo',
+          url: './assets/videos/video-show-11.mp4',
+          thumbnail: './assets/gallery/foto-show-11.jpg'
+        },
+        {
+          id: 'v12',
+          type: 'video',
+          title: 'Sintonia Pura: Robson, Davi e Alex',
+          url: './assets/videos/video-show-12.mp4',
+          thumbnail: './assets/gallery/foto-show-12.jpg'
+        },
+        {
+          id: 'v13',
+          type: 'video',
+          title: 'Repertório Completo para Casamentos e Eventos',
+          url: './assets/videos/video-show-13.mp4',
+          thumbnail: './assets/gallery/foto-show-13.jpg'
+        },
+        {
+          id: 'v14',
+          type: 'video',
+          title: 'Festa e Alegria: Batucada de Respeito',
+          url: './assets/videos/video-show-14.mp4',
+          thumbnail: './assets/gallery/foto-show-14.jpg'
+        },
+        {
+          id: 'v15',
+          type: 'video',
+          title: 'Samba de Primeira com o Pagode do Diniz',
+          url: './assets/videos/video-show-15.mp4'
+        },
+        {
+          id: 'v16',
+          type: 'video',
+          title: 'Show ao Vivo: Energia do Início ao Fim',
+          url: './assets/videos/video-show-16.mp4'
+        },
+        {
+          id: 'v17',
+          type: 'video',
+          title: 'O Povo Cantando os Maiores Sucessos',
+          url: './assets/videos/video-show-17.mp4'
+        },
+        {
+          id: 'v18',
+          type: 'video',
+          title: 'Apresentação Especial com Todos os Componentes',
+          url: './assets/videos/video-show-18.mp4'
+        },
+        {
+          id: 'v19',
+          type: 'video',
+          title: 'Encerramento com Chave de Ouro',
+          url: './assets/videos/video-show-19.mp4'
+        },
+        {
+          id: 'p01',
+          type: 'photo',
+          title: 'Davi Diniz & Cavaquinho no Palco',
+          url: './assets/gallery/foto-show-01.jpg'
+        },
+        {
+          id: 'p02',
+          type: 'photo',
+          title: 'Robson Reis & Harmonia ao Vivo',
+          url: './assets/gallery/foto-show-02.jpg'
+        },
+        {
+          id: 'p03',
+          type: 'photo',
+          title: 'Alex Silva na Bateria & Percussão',
+          url: './assets/gallery/foto-show-03.jpg'
+        },
+        {
+          id: 'p04',
+          type: 'photo',
+          title: 'Show ao Vivo - Vibe da Galera',
+          url: './assets/gallery/foto-show-04.jpg'
+        },
+        {
+          id: 'p05',
+          type: 'photo',
+          title: 'Samba no Pé e Casa Lotada',
+          url: './assets/gallery/foto-show-05.jpg'
+        },
+        {
+          id: 'p06',
+          type: 'photo',
+          title: 'Palco Iluminado: Pagode do Diniz',
+          url: './assets/gallery/foto-show-06.jpg'
+        },
+        {
+          id: 'p07',
+          type: 'photo',
+          title: 'Apresentação Especial para Evento Fechado',
+          url: './assets/gallery/foto-show-07.jpg'
+        },
+        {
+          id: 'p08',
+          type: 'photo',
+          title: 'Sintonia das Cordas e Batucada',
+          url: './assets/gallery/foto-show-08.jpg'
+        },
+        {
+          id: 'p09',
+          type: 'photo',
+          title: 'Roda de Samba Tradicional',
+          url: './assets/gallery/foto-show-09.jpg'
+        },
+        {
+          id: 'p10',
+          type: 'photo',
+          title: 'Energia Máxima no Show',
+          url: './assets/gallery/foto-show-10.jpg'
+        },
+        {
+          id: 'p11',
+          type: 'photo',
+          title: 'Destaque no Palco - Show ao Vivo',
+          url: './assets/gallery/foto-show-11.jpg'
+        },
+        {
+          id: 'p12',
+          type: 'photo',
+          title: 'Clássicos do Samba com a Banda',
+          url: './assets/gallery/foto-show-12.jpg'
+        },
+        {
+          id: 'p13',
+          type: 'photo',
+          title: 'Festa & Confraternização com Pagode',
+          url: './assets/gallery/foto-show-13.jpg'
+        },
+        {
+          id: 'p14',
+          type: 'photo',
+          title: 'Banda Pagode do Diniz em Ação',
+          url: './assets/gallery/foto-show-14.jpg'
+        }
+      ],
+      shows: [
+      ]
+    };
+
+    // Estado inicial = dados padrão; os dados reais vêm da API (banco D1) logo após o carregamento
+    let appData = JSON.parse(JSON.stringify(defaultData));
+
+    const API_BASE = '/api';
+    let adminToken = sessionStorage.getItem(ADMIN_TOKEN_KEY) || '';
+
+    // Aplica os dados vindos do servidor sobre os padrões
+    function applyRemoteData(remote) {
+      const base = JSON.parse(JSON.stringify(defaultData));
+      if (!remote || typeof remote !== 'object') return base;
+
+      let members = base.members;
+      if (Array.isArray(remote.members) && remote.members.length === 3) {
+        members = remote.members.map((m, i) => ({ ...base.members[i], ...m }));
+      }
+      return {
+        settings: { ...base.settings, ...(remote.settings || {}) },
+        story: { ...base.story, ...(remote.story || {}) },
+        members,
+        gallery: Array.isArray(remote.gallery) ? remote.gallery : base.gallery,
+        shows: Array.isArray(remote.shows) ? remote.shows : base.shows
+      };
+    }
+
+    async function loadRemoteData() {
+      try {
+        const res = await fetch(`${API_BASE}/data`, {
+          headers: adminToken ? { Authorization: `Bearer ${adminToken}` } : {},
+          cache: 'no-store'
+        });
+        if (res.status === 401) { adminToken = ''; sessionStorage.removeItem(ADMIN_TOKEN_KEY); }
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        appData = applyRemoteData(await res.json());
+        return true;
+      } catch (err) {
+        console.warn('Não foi possível carregar dados do servidor; usando dados padrão.', err);
+        return false;
+      }
+    }
+
+    function renderAll() {
+      renderBranding();
+      renderMembers();
+      renderCalendar();
+      renderUpcomingShows();
+      renderGallery();
+    }
+
+    // Salva no banco (somente admin logado). Agrupa várias alterações seguidas.
+    let saveTimer = null;
+    function saveAppData() {
+      if (!adminToken) {
+        showToast('Faça login no painel para salvar alterações.', 'warning');
+        return;
+      }
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`${API_BASE}/data`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
+            body: JSON.stringify({
+              settings: appData.settings,
+              story: appData.story,
+              members: appData.members,
+              gallery: appData.gallery,
+              shows: appData.shows
+            })
+          });
+          if (res.status === 401) {
+            adminToken = '';
+            sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+            showToast('Sessão expirada. Entre novamente no painel.', 'error');
+            return;
+          }
+          if (!res.ok) {
+            const info = await res.json().catch(() => ({}));
+            showToast(info.error || 'Erro ao salvar no servidor.', 'error');
+            return;
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Sem conexão com o servidor. Alteração não salva.', 'error');
+        }
+      }, 300);
+    }
+
+    /* =========================================================
+       2. CONTROLE DO CALENDÁRIO INTERATIVO
+    ========================================================= */
+    // Iniciar calendário no mês de Novembro 2026 (ou no mês atual se for posterior)
+    let currentCalendarDate = new Date(2026, 10, 1); // 10 = Novembro (zero-indexed)
+    let selectedBookingDate = null; // YYYY-MM-DD
+
+    const monthNames = [
+      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+
+    function changeMonth(direction) {
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() + direction);
+      renderCalendar();
+    }
+
+    function goToCurrentMonth() {
+      // Usar a data atual do sistema (2026)
+      const now = new Date();
+      currentCalendarDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const year = currentCalendarDate.getFullYear();
+      const month = currentCalendarDate.getMonth();
+
+      // Atualizar Header
+      const monthYearTitle = document.getElementById('calendar-month-year');
+      if (monthYearTitle) {
+        monthYearTitle.textContent = `${monthNames[month]} ${year}`;
+      }
+
+      const grid = document.getElementById('calendar-days-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      // Primeiro dia do mês e total de dias
+      const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Domingo
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+      // Dias do mês anterior para completar primeira semana
+      for (let i = firstDayIndex; i > 0; i--) {
+        const dayNum = prevMonthLastDay - i + 1;
+        const cell = document.createElement('div');
+        cell.className = 'h-16 sm:h-20 rounded-xl bg-zinc-950/40 border border-zinc-900/60 p-1.5 flex flex-col justify-between text-zinc-700 select-none opacity-40';
+        cell.innerHTML = `<span class="text-xs font-semibold">${dayNum}</span>`;
+        grid.appendChild(cell);
+      }
+
+      // Shows ocupados (somente datas FECHADAS/aprovadas bloqueiam o calendário)
+      const bookedDatesMap = {};
+      appData.shows.forEach(show => {
+        if (isShowConfirmed(show)) bookedDatesMap[show.date] = show;
+      });
+
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      // Dias do mês atual
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isPast = dateStr < todayStr;
+        const bookedShow = bookedDatesMap[dateStr];
+        const isSelected = selectedBookingDate === dateStr;
+
+        const cell = document.createElement('div');
+        
+        if (bookedShow) {
+          // DATA OCUPADA / SHOW MARCADO -> BLOQUEADO
+          cell.className = 'h-16 sm:h-20 rounded-xl bg-red-950/20 border border-red-500/40 p-1.5 sm:p-2 flex flex-col justify-between transition-all relative overflow-hidden group cursor-not-allowed';
+          cell.title = `Data ocupada: ${publicShowTitle(bookedShow)}`;
+          cell.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-red-300">${day}</span>
+              <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            </div>
+            <div class="bg-red-500/20 text-red-300 text-[10px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded truncate">
+              Ocupado
+            </div>
+          `;
+          cell.onclick = () => {
+            showToast(`A data ${formatDateDisplay(dateStr)} já está ocupada (${publicShowTitle(bookedShow)}). Escolha uma data livre para orçar!`, 'warning');
+          };
+        } else if (isPast) {
+          // DATA PASSADA
+          cell.className = 'h-16 sm:h-20 rounded-xl bg-zinc-950/60 border border-zinc-900 p-1.5 flex flex-col justify-between text-zinc-600 select-none opacity-50';
+          cell.innerHTML = `
+            <span class="text-xs font-semibold">${day}</span>
+            <span class="text-[9px] text-zinc-600 uppercase">Passado</span>
+          `;
+        } else {
+          // DATA LIVRE (DISPONÍVEL PARA CLIQUE E ORÇAMENTO)
+          if (isSelected) {
+            cell.className = 'h-16 sm:h-20 rounded-xl bg-amber-500 border-2 border-white p-1.5 sm:p-2 flex flex-col justify-between transition-all cursor-pointer shadow-lg shadow-amber-500/30 transform scale-[1.03] z-10';
+            cell.innerHTML = `
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-black">${day}</span>
+                <span class="w-2 h-2 rounded-full bg-black"></span>
+              </div>
+              <div class="bg-black text-amber-300 text-[10px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded text-center truncate">
+                Selecionada
+              </div>
+            `;
+          } else {
+            cell.className = 'h-16 sm:h-20 rounded-xl bg-zinc-900/80 hover:bg-zinc-800/90 border border-emerald-500/30 hover:border-amber-400/80 p-1.5 sm:p-2 flex flex-col justify-between transition-all cursor-pointer group hover:scale-[1.02] hover:shadow-md';
+            cell.title = 'Clique para solicitar orçamento nesta data!';
+            cell.innerHTML = `
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-zinc-200 group-hover:text-amber-400">${day}</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 group-hover:bg-amber-400"></span>
+              </div>
+              <div class="text-[10px] sm:text-[11px] font-semibold text-emerald-400 group-hover:text-amber-300 flex items-center gap-1">
+                <span>Livre</span>
+                <span class="hidden sm:inline">➜</span>
+              </div>
+            `;
+            cell.onclick = () => selectDateForBooking(dateStr);
+          }
+        }
+
+        grid.appendChild(cell);
+      }
+
+      // Completar o grid para manter 35 ou 42 células
+      const totalCells = firstDayIndex + daysInMonth;
+      const remainingCells = (totalCells <= 35 ? 35 : 42) - totalCells;
+      for (let day = 1; day <= remainingCells; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'h-16 sm:h-20 rounded-xl bg-zinc-950/40 border border-zinc-900/60 p-1.5 flex flex-col justify-between text-zinc-700 select-none opacity-40';
+        cell.innerHTML = `<span class="text-xs font-semibold">${day}</span>`;
+        grid.appendChild(cell);
+      }
+    }
+
+    // Selecionar data livre e preencher formulário
+    function selectDateForBooking(dateStr) {
+      selectedBookingDate = dateStr;
+      renderCalendar();
+
+      // Preencher o input de data no formulário
+      const dateInput = document.getElementById('quote-date');
+      if (dateInput) {
+        dateInput.value = dateStr;
+      }
+
+      // Exibir alerta/badge de data selecionada
+      const banner = document.getElementById('selected-date-alert');
+      const textSpan = document.getElementById('selected-date-text');
+      if (banner && textSpan) {
+        textSpan.textContent = formatDateDisplay(dateStr);
+        banner.classList.remove('hidden');
+      }
+
+      showToast(`Data ${formatDateDisplay(dateStr)} selecionada! Rolando para o formulário...`, 'success');
+
+      // Rolagem suave até o formulário
+      const quoteSection = document.getElementById('orcamento');
+      if (quoteSection) {
+        quoteSection.scrollIntoView({ behavior: 'smooth' });
+        // Focar no primeiro campo
+        setTimeout(() => {
+          document.getElementById('quote-name')?.focus();
+        }, 500);
+      }
+    }
+
+    function syncDateFromInput(dateVal) {
+      if (!dateVal) return;
+      // Verificar se a data está ocupada
+      const booked = appData.shows.find(s => s.date === dateVal && isShowConfirmed(s));
+      if (booked) {
+        showToast(`Atenção: A data ${formatDateDisplay(dateVal)} já está ocupada.`, 'warning');
+        selectedBookingDate = null;
+        document.getElementById('selected-date-alert')?.classList.add('hidden');
+      } else {
+        selectedBookingDate = dateVal;
+        const banner = document.getElementById('selected-date-alert');
+        const textSpan = document.getElementById('selected-date-text');
+        if (banner && textSpan) {
+          textSpan.textContent = formatDateDisplay(dateVal);
+          banner.classList.remove('hidden');
+        }
+      }
+      renderCalendar();
+    }
+
+    function clearSelectedDate() {
+      selectedBookingDate = null;
+      document.getElementById('quote-date').value = '';
+      document.getElementById('selected-date-alert')?.classList.add('hidden');
+      renderCalendar();
+    }
+
+    function formatDateDisplay(yyyyMmDd) {
+      if (!yyyyMmDd) return '';
+      const parts = yyyyMmDd.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return yyyyMmDd;
+    }
+
+    /* =========================================================
+       3. RENDERIZAR AGENDA LATERAL (SHOWS CONFIRMADOS)
+    ========================================================= */
+    function isShowConfirmed(show) {
+      return show.confirmed !== false;
+    }
+
+    function publicShowTitle(show) {
+      return show.isPrivate ? 'Evento Particular' : show.venue;
+    }
+
+    function renderUpcomingShows() {
+      const container = document.getElementById('upcoming-shows-list');
+      if (!container) return;
+
+      const todayStr = new Date().toISOString().split('T')[0];
+      const sortedShows = appData.shows
+        .filter(s => isShowConfirmed(s) && s.date >= todayStr)
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      if (sortedShows.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-6 text-zinc-500 text-xs">
+            Nenhum show confirmado no momento. Todas as datas estão livres!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = sortedShows.map(show => {
+        const parts = show.date.split('-');
+        const day = parts[2];
+        const monthNum = parseInt(parts[1], 10) - 1;
+        const monthShort = monthNames[monthNum]?.substring(0, 3) || '';
+
+        return `
+          <div class="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/30 transition-all flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/30 flex flex-col items-center justify-center text-amber-400 shrink-0">
+              <span class="text-sm font-black leading-none">${day}</span>
+              <span class="text-[10px] uppercase font-bold text-zinc-400">${monthShort}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h4 class="text-xs sm:text-sm font-bold text-white truncate">${escapeHtml(publicShowTitle(show))}</h4>
+                <span class="text-[10px] font-semibold text-amber-400/90 whitespace-nowrap">${escapeHtml(show.time || '')}</span>
+              </div>
+              <div class="text-xs text-zinc-400 flex items-center justify-between mt-0.5">
+                <span class="truncate">${show.isPrivate ? '' : escapeHtml(show.city || '')}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 font-medium">${show.isPrivate ? 'Particular' : 'Show Público'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================
+       4. GALERIA DE MÍDIA (FOTOS E VÍDEOS)
+    ========================================================= */
+    let currentGalleryFilter = 'all';
+
+    function filterGallery(type) {
+      currentGalleryFilter = type;
+      
+      // Atualizar botões
+      ['all', 'photo', 'video'].forEach(t => {
+        const btn = document.getElementById(`filter-btn-${t}`);
+        if (btn) {
+          if (t === type) {
+            btn.className = 'px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-500 text-black transition-all';
+          } else {
+            btn.className = 'px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 transition-all';
+          }
+        }
+      });
+
+      renderGallery();
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('gallery-grid');
+      if (!grid) return;
+
+      const filtered = appData.gallery.filter(item => {
+        if (currentGalleryFilter === 'all') return true;
+        return item.type === currentGalleryFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-12 text-zinc-500 text-sm">
+            Nenhuma mídia cadastrada nesta categoria. Adicione pelo Painel Administrativo!
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isVideo = item.type === 'video';
+        const isLocalVideo = isVideo && (item.url.includes('.mp4') || item.url.includes('/videos/'));
+        
+        let mediaHtml = '';
+        if (item.thumbnail) {
+          mediaHtml = `<img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`;
+        } else if (isLocalVideo) {
+          mediaHtml = `<video src="${escapeHtml(item.url)}#t=0.5" preload="metadata" muted playsinline class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"></video>`;
+        } else {
+          mediaHtml = `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title)}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`;
+        }
+
+        return `
+          <div onclick="openLightboxItem('${item.id}')" class="group relative rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800/80 hover:border-amber-500/60 cursor-pointer shadow-lg hover:shadow-gold-glow transition-all duration-300 aspect-video flex flex-col justify-end">
+            ${mediaHtml}
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-85 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
+            
+            <!-- Badge Tipo de Mídia -->
+            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-zinc-950/80 backdrop-blur-md border border-zinc-700/60 text-[10px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5 z-10">
+              ${isVideo ? `
+                <svg class="w-3 h-3 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Vídeo de Show
+              ` : `
+                <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Foto
+              `}
+            </div>
+
+            <!-- Botão Play Central se for vídeo -->
+            ${isVideo ? `
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                <div class="w-12 h-12 rounded-full bg-amber-500/95 text-black flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-amber-400 transition-all duration-300">
+                  <svg class="w-6 h-6 ml-0.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Legenda Inferior -->
+            <div class="relative p-4 z-10 pointer-events-none">
+              <h4 class="font-bold text-white text-sm group-hover:text-amber-400 transition-colors line-clamp-1">${escapeHtml(item.title)}</h4>
+              <p class="text-[11px] text-zinc-400 mt-0.5 flex items-center gap-1">
+                <span>${isVideo ? 'Assistir ao vídeo' : 'Ampliar foto'}</span>
+                <span class="text-amber-400">➜</span>
+              </p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================
+       5. LIGHTBOX DE MÍDIA
+    ========================================================= */
+    function openLightboxItem(id) {
+      const item = appData.gallery.find(g => g.id === id);
+      if (!item) return;
+
+      const modal = document.getElementById('lightbox-modal');
+      const content = document.getElementById('lightbox-content');
+      const caption = document.getElementById('lightbox-caption');
+
+      caption.textContent = item.title;
+
+      if (item.type === 'video') {
+        pauseMusicForVideo();
+        const videoId = extractYouTubeId(item.url);
+        if (videoId) {
+          content.innerHTML = `
+            <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-amber-500/30">
+              <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          `;
+        } else {
+          content.innerHTML = `
+            <div class="w-full max-w-4xl max-h-[80vh] aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-amber-500/30 flex items-center justify-center">
+              <video src="${escapeHtml(item.url)}" controls autoplay playsinline class="w-full h-full max-h-[80vh] object-contain rounded-2xl bg-black"></video>
+            </div>
+          `;
+        }
+      } else {
+        content.innerHTML = `
+          <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title)}" class="max-h-[80vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl border border-zinc-800">
+        `;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    /* ===== MÚSICA DE FUNDO ===== */
+    const MUSIC_PREF_KEY = 'pagode_do_diniz_music_on';
+    let musicWanted = localStorage.getItem(MUSIC_PREF_KEY) !== 'off'; // padrão: ligada
+    let musicPausedByVideo = false;
+
+    function updateMusicButton() {
+      const audio = document.getElementById('bg-music');
+      const icon = document.getElementById('bg-music-icon');
+      const label = document.getElementById('bg-music-label');
+      if (!audio || !icon) return;
+      const playing = !audio.paused;
+      icon.innerHTML = playing
+        ? '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05A4.5 4.5 0 0016.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>'
+        : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.8 8.8 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+      if (label) label.textContent = playing ? 'Música: ligada' : 'Música: desligada';
+    }
+
+    function tryPlayMusic() {
+      const audio = document.getElementById('bg-music');
+      if (!audio || !musicWanted || musicPausedByVideo) return;
+      audio.volume = 0.35;
+      audio.play().then(updateMusicButton).catch(() => updateMusicButton());
+    }
+
+    function toggleBgMusic() {
+      const audio = document.getElementById('bg-music');
+      if (!audio) return;
+      if (audio.paused) {
+        musicWanted = true;
+        localStorage.setItem(MUSIC_PREF_KEY, 'on');
+        musicPausedByVideo = false;
+        tryPlayMusic();
+      } else {
+        musicWanted = false;
+        localStorage.setItem(MUSIC_PREF_KEY, 'off');
+        audio.pause();
+      }
+      updateMusicButton();
+    }
+
+    function initBgMusic() {
+      const audio = document.getElementById('bg-music');
+      if (!audio) return;
+      audio.addEventListener('play', updateMusicButton);
+      audio.addEventListener('pause', updateMusicButton);
+      updateMusicButton();
+      tryPlayMusic(); // tenta ao entrar
+      // Navegadores bloqueiam autoplay: inicia no primeiro toque/clique/rolagem
+      const unlock = (ev) => {
+        if (ev.target && ev.target.closest && ev.target.closest('#bg-music-btn')) return;
+        tryPlayMusic();
+        if (!audio.paused || !musicWanted) {
+          ['click', 'touchstart', 'keydown', 'wheel', 'scroll'].forEach(t => window.removeEventListener(t, unlock, true));
+        }
+      };
+      ['click', 'touchstart', 'keydown', 'wheel', 'scroll'].forEach(t => window.addEventListener(t, unlock, { capture: true, passive: true }));
+    }
+
+    function pauseMusicForVideo() {
+      const audio = document.getElementById('bg-music');
+      if (audio && !audio.paused) {
+        musicPausedByVideo = true;
+        audio.pause();
+      }
+    }
+
+    function resumeMusicAfterVideo() {
+      if (musicPausedByVideo) {
+        musicPausedByVideo = false;
+        tryPlayMusic();
+      }
+    }
+
+    function closeLightbox(e, force = false) {
+      if (force || (e && (e.target.id === 'lightbox-modal' || e.target.closest('#lightbox-close-btn')))) {
+        const modal = document.getElementById('lightbox-modal');
+        const content = document.getElementById('lightbox-content');
+        resumeMusicAfterVideo();
+        if (content) {
+          const v = content.querySelector('video');
+          if (v) {
+            try { v.pause(); v.src = ''; v.load(); } catch(err){}
+          }
+          content.innerHTML = '';
+        }
+        modal.classList.add('hidden');
+      }
+    }
+
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    /* =========================================================
+       6. FORMULÁRIO DE ORÇAMENTO & ENVIO VIA WHATSAPP
+    ========================================================= */
+    function handleQuoteSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('quote-name').value.trim();
+      const phone = document.getElementById('quote-phone').value.trim();
+      const dateVal = document.getElementById('quote-date').value;
+      const timeVal = document.getElementById('quote-time').value;
+      const duration = document.getElementById('quote-duration').value;
+      const eventType = document.getElementById('quote-event-type').value;
+      const guests = document.getElementById('quote-guests').value;
+      const sound = document.getElementById('quote-sound').value;
+      const location = document.getElementById('quote-location').value.trim();
+      const notes = document.getElementById('quote-notes').value.trim();
+
+      if (!name || !phone || !dateVal || !timeVal || !location) {
+        showToast('Por favor, preencha todos os campos obrigatórios (*)', 'warning');
+        return;
+      }
+
+      // Validar se data está ocupada
+      const booked = appData.shows.find(s => s.date === dateVal && isShowConfirmed(s));
+      if (booked) {
+        showToast(`A data ${formatDateDisplay(dateVal)} já está marcada para outro show. Por favor, selecione outra data disponível no calendário.`, 'error');
+        return;
+      }
+
+      const formattedDate = formatDateDisplay(dateVal);
+
+      // Montar mensagem elegante para WhatsApp
+      const msg = 
+`🥁 *SOLICITAÇÃO DE ORÇAMENTO - PAGODE DO DINIZ* 🎶
+--------------------------------------------------
+Olá, equipe do Pagode do Diniz! Gostaria de um orçamento para um show:
+
+👤 *Contratante:* ${name}
+📱 *WhatsApp de Contato:* ${phone}
+📅 *Data do Evento:* ${formattedDate}
+⏰ *Horário Previsto:* ${timeVal}
+⏳ *Duração:* ${duration}
+🎉 *Tipo de Evento:* ${eventType}
+👥 *Estimativa de Pessoas:* ${guests}
+📍 *Local / Cidade:* ${location}
+🔊 *Equipamento de Som:* ${sound}
+${notes ? `📝 *Observações / Pedidos:* ${notes}\n` : ''}--------------------------------------------------
+💰 *Orçamento de referência:* R$ 2.100,00 para Belo Horizonte e região (show de 2 horas, com som para até 70 pessoas; somente o som é por conta da banda).
+⚠️ _Observação: o valor pode ser alterado na negociação pelo WhatsApp._
+--------------------------------------------------
+_Mensagem gerada via site oficial Pagode do Diniz._`;
+
+      const encodedMsg = encodeURIComponent(msg);
+      const targetPhone = appData.settings.whatsappPhone.replace(/\D/g, '') || '5511987654321';
+      const whatsappUrl = `https://wa.me/${targetPhone}?text=${encodedMsg}`;
+
+      showToast('Orçamento pronto! Abrindo WhatsApp com os dados...', 'success');
+
+      // Abrir em nova aba
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 350);
+    }
+
+    /* =========================================================
+       7. LOGO & ELEMENTOS INSTITUCIONAIS
+    ========================================================= */
+    function renderBranding() {
+      const headerContainer = document.getElementById('header-logo-container');
+      const footerContainer = document.getElementById('footer-logo-container');
+      const adminPreview = document.getElementById('admin-logo-preview');
+
+      const brandNameElem = document.getElementById('header-brand-name');
+      const footerBrandElem = document.getElementById('footer-brand-name');
+      const taglineElem = document.getElementById('header-brand-tagline');
+      const footerPhoneElem = document.getElementById('footer-phone-display');
+
+      if (brandNameElem) brandNameElem.textContent = appData.settings.bandName;
+      if (footerBrandElem) footerBrandElem.textContent = appData.settings.bandName;
+      if (taglineElem) {
+        taglineElem.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span> ${escapeHtml(appData.settings.tagline)}`;
+      }
+      if (footerPhoneElem) {
+        footerPhoneElem.textContent = formatPhoneDisplay(appData.settings.whatsappPhone);
+      }
+
+      // Renderizar Logo (Imagem ou SVG estilizado)
+      const logoHtml = appData.settings.customLogoUrl ? `
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white p-1 border-2 border-amber-400/80 shadow-lg shadow-amber-500/20 flex items-center justify-center overflow-hidden shrink-0">
+          <img src="${escapeHtml(appData.settings.customLogoUrl)}" alt="${escapeHtml(appData.settings.bandName)}" class="w-full h-full object-contain">
+        </div>
+      ` : `
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl gold-gradient-bg text-black font-black flex items-center justify-center shadow-lg shadow-amber-500/30 border border-amber-300">
+          <svg class="w-7 h-7 text-black" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+        </div>
+      `;
+
+      if (headerContainer) headerContainer.innerHTML = logoHtml;
+      if (footerContainer) footerContainer.innerHTML = logoHtml;
+      if (adminPreview) adminPreview.innerHTML = logoHtml;
+
+      // Seção Nossa História & Card do Hero
+      document.getElementById('story-title-display').textContent = appData.story.title;
+      document.getElementById('story-subtitle-display').textContent = appData.story.subtitle;
+      document.getElementById('story-main-img').src = appData.story.mainPhoto;
+      const heroImg = document.getElementById('hero-feature-img');
+      if (heroImg) heroImg.src = appData.story.mainPhoto;
+
+      // Formatar Markdown básico (quebras de linha e negrito)
+      const storyFormatted = appData.story.content
+        .split('\n\n')
+        .map(p => `<p>${escapeHtml(p).replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')}</p>`)
+        .join('');
+      document.getElementById('story-content-display').innerHTML = storyFormatted;
+
+      // Métricas
+      document.getElementById('metric-years').textContent = appData.story.metricYears;
+      document.getElementById('metric-shows').textContent = appData.story.metricShows;
+    }
+
+    function formatPhoneDisplay(raw) {
+      if (!raw) return '(11) 98765-4321';
+      const clean = raw.replace(/\D/g, '');
+      if (clean.length === 13) { // 55 11 99999-9999
+        return `(${clean.slice(2, 4)}) ${clean.slice(4, 9)}-${clean.slice(9)}`;
+      } else if (clean.length === 11) { // 11 99999-9999
+        return `(${clean.slice(0, 2)}) ${clean.slice(2, 7)}-${clean.slice(7)}`;
+      }
+      return raw;
+    }
+
+    /* =========================================================
+       8. PAINEL ADMINISTRATIVO & AUTENTICAÇÃO
+    ========================================================= */
+    async function openAdminModal(targetTab = 'tab-logo') {
+      if (adminToken) {
+        // Recarrega os dados completos (inclui shows particulares e em negociação)
+        await loadRemoteData();
+      }
+      if (adminToken) {
+        document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+        switchAdminTab(targetTab);
+        populateAdminFields();
+      } else {
+        document.getElementById('admin-login-modal').classList.remove('hidden');
+        setTimeout(() => document.getElementById('admin-password-input')?.focus(), 200);
+      }
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('admin-login-modal').classList.add('hidden');
+    }
+
+    function closeAdminDashboard() {
+      document.getElementById('admin-dashboard-modal').classList.add('hidden');
+      renderAll(); // atualiza o site público com o que foi editado
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('admin-password-input');
+      try {
+        const res = await fetch(`${API_BASE}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: input.value })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          adminToken = data.token;
+          sessionStorage.setItem(ADMIN_TOKEN_KEY, adminToken);
+          input.value = '';
+          closeAdminLoginModal();
+          await openAdminModal();
+          showToast('Acesso concedido ao Painel da Banda!', 'success');
+        } else if (res.status === 401) {
+          showToast('Senha incorreta. Tente novamente.', 'error');
+        } else {
+          showToast('Servidor indisponível. Tente novamente em instantes.', 'error');
+        }
+      } catch (err) {
+        showToast('Sem conexão com o servidor.', 'error');
+      }
+    }
+
+    function logoutAdmin() {
+      adminToken = '';
+      sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+      closeAdminDashboard();
+      loadRemoteData().then(renderAll); // volta à visão pública
+      showToast('Sessão administrativa encerrada.', 'info');
+    }
+
+    function switchAdminTab(tabId) {
+      const tabs = ['tab-logo', 'tab-story', 'tab-members', 'tab-media', 'tab-calendar'];
+      tabs.forEach(t => {
+        const content = document.getElementById(t);
+        const btn = document.getElementById(`btn-${t}`);
+        if (t === tabId) {
+          content?.classList.remove('hidden');
+          btn?.classList.remove('border-transparent', 'text-zinc-400');
+          btn?.classList.add('border-amber-500', 'text-amber-400');
+        } else {
+          content?.classList.add('hidden');
+          btn?.classList.remove('border-amber-500', 'text-amber-400');
+          btn?.classList.add('border-transparent', 'text-zinc-400');
+        }
+      });
+    }
+
+    function populateAdminFields() {
+      // Tab 1: Logo & Configs
+      document.getElementById('admin-logo-url-input').value = appData.settings.customLogoUrl || '';
+      document.getElementById('admin-band-name-input').value = appData.settings.bandName;
+      document.getElementById('admin-band-tagline-input').value = appData.settings.tagline;
+      document.getElementById('admin-whatsapp-number-input').value = appData.settings.whatsappPhone;
+
+      // Tab 2: História
+      document.getElementById('admin-story-title-input').value = appData.story.title;
+      document.getElementById('admin-story-subtitle-input').value = appData.story.subtitle;
+      document.getElementById('admin-story-img-url').value = appData.story.mainPhoto;
+      document.getElementById('admin-story-img-preview').src = appData.story.mainPhoto;
+      document.getElementById('admin-story-text-input').value = appData.story.content;
+      document.getElementById('admin-metric-years-input').value = appData.story.metricYears;
+      document.getElementById('admin-metric-shows-input').value = appData.story.metricShows;
+
+      // Tab 3: Integrantes
+      renderAdminMembersList();
+
+      // Tab 4: Galeria
+      renderAdminMediaList();
+
+      // Tab 5: Agenda Shows
+      renderAdminShowsTable();
+    }
+
+    // Logo Handlers
+    function handleLogoFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) {
+        showToast('A imagem excede 2MB. Escolha uma imagem mais leve.', 'warning');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        appData.settings.customLogoUrl = evt.target.result;
+        saveAppData();
+        renderBranding();
+        showToast('Logotipo atualizado via upload com sucesso!', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveLogoUrl() {
+      const url = document.getElementById('admin-logo-url-input').value.trim();
+      if (!url) {
+        showToast('Por favor, informe a URL da imagem.', 'warning');
+        return;
+      }
+      appData.settings.customLogoUrl = url;
+      saveAppData();
+      renderBranding();
+      showToast('URL do logotipo aplicada com sucesso!', 'success');
+    }
+
+    function resetToDefaultLogo() {
+      appData.settings.customLogoUrl = null;
+      document.getElementById('admin-logo-url-input').value = '';
+      saveAppData();
+      renderBranding();
+      showToast('Logotipo redefinido para o emblema padrão.', 'info');
+    }
+
+    function saveGeneralSettings() {
+      const bandName = document.getElementById('admin-band-name-input').value.trim();
+      const tagline = document.getElementById('admin-band-tagline-input').value.trim();
+      const phone = document.getElementById('admin-whatsapp-number-input').value.trim();
+
+      if (bandName) appData.settings.bandName = bandName;
+      if (tagline) appData.settings.tagline = tagline;
+      if (phone) appData.settings.whatsappPhone = phone;
+
+      saveAppData();
+      renderBranding();
+      showToast('Configurações da banda salvas com sucesso!', 'success');
+    }
+
+    // História Handlers
+    function handleStoryFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 3 * 1024 * 1024) {
+        showToast('Foto muito grande. Máximo de 3MB.', 'warning');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        appData.story.mainPhoto = evt.target.result;
+        document.getElementById('admin-story-img-preview').src = evt.target.result;
+        document.getElementById('admin-story-img-url').value = '';
+        saveAppData();
+        renderBranding();
+        showToast('Foto da história atualizada!', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function applyStoryImgUrl() {
+      const url = document.getElementById('admin-story-img-url').value.trim();
+      if (url) {
+        appData.story.mainPhoto = url;
+        document.getElementById('admin-story-img-preview').src = url;
+        saveAppData();
+        renderBranding();
+        showToast('URL da foto aplicada!', 'success');
+      }
+    }
+
+    function saveStorySettings() {
+      appData.story.title = document.getElementById('admin-story-title-input').value.trim() || appData.story.title;
+      appData.story.subtitle = document.getElementById('admin-story-subtitle-input').value.trim() || appData.story.subtitle;
+      appData.story.content = document.getElementById('admin-story-text-input').value.trim() || appData.story.content;
+      appData.story.metricYears = document.getElementById('admin-metric-years-input').value.trim() || '+8 Anos';
+      appData.story.metricShows = document.getElementById('admin-metric-shows-input').value.trim() || '+500';
+
+      saveAppData();
+      renderBranding();
+      showToast('Seção "Nossa História" atualizada com sucesso!', 'success');
+    }
+
+    /* =========================================================
+       INTEGRANTES DA BANDA (DAVÍ DINIZ, ROBSON REIS, ALEX SILVA)
+    ========================================================= */
+    function renderMembers() {
+      const container = document.getElementById('members-grid');
+      if (!container) return;
+
+      container.innerHTML = appData.members.map((member, index) => {
+        const instagramUrl = member.instagramUrl || `https://www.instagram.com/${member.handle.replace('@', '')}/`;
+        const icon = member.roleIcon || (index === 0 ? '🎤' : (index === 1 ? '🎸' : '🥁'));
+
+        return `
+          <div class="group relative rounded-3xl overflow-hidden bg-zinc-950 border border-amber-500/30 hover:border-amber-400/80 transition-all duration-500 shadow-2xl hover:shadow-gold-glow flex flex-col justify-between">
+            
+            <!-- Glowing Spotlight Ambient -->
+            <div class="absolute -top-20 -right-20 w-56 h-56 bg-amber-500/15 rounded-full blur-3xl group-hover:bg-amber-500/25 transition-all pointer-events-none"></div>
+
+            <!-- Top Media Container (Stage Photo HD) -->
+            <div class="relative w-full h-80 sm:h-96 overflow-hidden bg-zinc-900">
+              <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)} - Pagode do Diniz" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+              
+              <!-- Ambient Stage Vignette -->
+              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+
+              <!-- Top Floating Pills -->
+              <div class="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950/85 backdrop-blur-md border border-amber-500/40 text-amber-400 text-xs font-bold shadow-lg">
+                  <span>${icon}</span>
+                  <span>${escapeHtml(member.role)}</span>
+                </span>
+              </div>
+
+              <!-- Bottom Overlay Details on Photo -->
+              <div class="absolute bottom-0 left-0 right-0 p-6 pt-12 bg-gradient-to-t from-zinc-950 via-zinc-950/90 to-transparent z-10">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-heading font-black text-2xl sm:text-3xl text-white tracking-tight drop-shadow-md group-hover:text-amber-400 transition-colors">
+                    ${escapeHtml(member.name)}
+                  </h3>
+                  <!-- Selo Verificado Estilizado -->
+                  <span class="w-5 h-5 rounded-full bg-amber-500 text-black flex items-center justify-center font-black text-[10px] shadow-md" title="Músico Oficial da Banda">
+                    ✓
+                  </span>
+                </div>
+                <a href="${escapeHtml(instagramUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-amber-400/90 hover:text-amber-300 font-mono mt-1 transition-colors">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>${escapeHtml(member.handle)}</span>
+                  <svg class="w-3.5 h-3.5 ml-0.5 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Biographical Narrative Body -->
+            <div class="p-6 pt-2 flex-1 flex flex-col justify-between space-y-5">
+              <div class="relative">
+                <span class="text-3xl text-amber-500/30 font-serif absolute -top-4 -left-2 select-none pointer-events-none">“</span>
+                <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed font-light pl-3 border-l-2 border-amber-500/30">
+                  ${escapeHtml(member.bio)}
+                </p>
+              </div>
+
+              <!-- Actions & Social Interaction -->
+              <div class="space-y-3 pt-2 border-t border-zinc-800/80">
+                <!-- Botão Seguir no Instagram -->
+                <a href="${escapeHtml(instagramUrl)}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl font-heading font-extrabold text-xs uppercase tracking-wider text-black bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-300 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Seguir ${escapeHtml(member.handle)}</span>
+                </a>
+
+                <!-- Curtidas & Tag -->
+                <div class="flex items-center justify-between text-xs text-zinc-400 px-1 pt-1">
+                  <button type="button" onclick="toggleMemberLike(this)" class="flex items-center gap-1.5 text-zinc-400 hover:text-red-400 transition-colors focus:outline-none select-none">
+                    <svg class="w-4 h-4 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span class="font-semibold text-zinc-300 like-counter">${980 + index * 14}</span>
+                    <span class="text-[11px] text-zinc-500">curtidas</span>
+                  </button>
+
+                  <div class="flex items-center gap-1.5 text-zinc-400 text-[11px]">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    <span class="text-zinc-300 font-medium">Pagode do Diniz</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleMemberLike(btn) {
+      const counter = btn.querySelector('.like-counter');
+      if (counter) {
+        let count = parseInt(counter.textContent.replace(/\D/g, ''), 10) || 980;
+        if (btn.classList.contains('liked')) {
+          btn.classList.remove('liked');
+          counter.textContent = count - 1;
+        } else {
+          btn.classList.add('liked');
+          counter.textContent = count + 1;
+          showToast('Obrigado pelo carinho com a nossa trajetória!', 'success');
+        }
+      }
+    }
+
+    function renderAdminMembersList() {
+      const container = document.getElementById('admin-members-list');
+      if (!container) return;
+
+      container.innerHTML = appData.members.map((member, idx) => {
+        return `
+          <div class="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
+            <div class="flex items-center gap-3 pb-3 border-b border-zinc-800">
+              <img src="${escapeHtml(member.photo)}" alt="${escapeHtml(member.name)}" class="w-12 h-12 rounded-xl object-cover border border-amber-500/40">
+              <div>
+                <h5 class="font-bold text-white text-base">${escapeHtml(member.name)}</h5>
+                <span class="text-xs text-amber-400 font-medium">${escapeHtml(member.role)} • ${escapeHtml(member.handle)}</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold uppercase text-zinc-400 mb-1">Nome Completo</label>
+                <input type="text" id="admin-member-name-${idx}" value="${escapeHtml(member.name)}" class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white text-xs focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase text-zinc-400 mb-1">Função / Instrumento</label>
+                <input type="text" id="admin-member-role-${idx}" value="${escapeHtml(member.role)}" class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white text-xs focus:outline-none focus:border-amber-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase text-zinc-400 mb-1">Instagram (@handle)</label>
+                <input type="text" id="admin-member-handle-${idx}" value="${escapeHtml(member.handle)}" class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white text-xs focus:outline-none focus:border-amber-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase text-zinc-400 mb-1">Caminho / URL da Foto</label>
+              <input type="text" id="admin-member-photo-${idx}" value="${escapeHtml(member.photo)}" class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white text-xs focus:outline-none focus:border-amber-500">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase text-zinc-400 mb-1">História / Biografia Individual</label>
+              <textarea id="admin-member-bio-${idx}" rows="4" class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white text-xs leading-relaxed focus:outline-none focus:border-amber-500">${escapeHtml(member.bio)}</textarea>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveMembersSettings() {
+      appData.members.forEach((m, idx) => {
+        const nameEl = document.getElementById(`admin-member-name-${idx}`);
+        const roleEl = document.getElementById(`admin-member-role-${idx}`);
+        const handleEl = document.getElementById(`admin-member-handle-${idx}`);
+        const photoEl = document.getElementById(`admin-member-photo-${idx}`);
+        const bioEl = document.getElementById(`admin-member-bio-${idx}`);
+
+        if (nameEl) m.name = nameEl.value.trim();
+        if (roleEl) m.role = roleEl.value.trim();
+        if (handleEl) {
+          m.handle = handleEl.value.trim();
+          m.instagramUrl = `https://www.instagram.com/${m.handle.replace('@', '')}/`;
+        }
+        if (photoEl) m.photo = photoEl.value.trim();
+        if (bioEl) m.bio = bioEl.value.trim();
+      });
+
+      saveAppData();
+      renderMembers();
+      showToast('Integrantes atualizados com sucesso!', 'success');
+    }
+
+    // Mídia Handlers
+    function toggleMediaInputType(type) {
+      const photoGroup = document.getElementById('photo-input-group');
+      const videoGroup = document.getElementById('video-input-group');
+      if (type === 'video') {
+        photoGroup.classList.add('hidden');
+        videoGroup.classList.remove('hidden');
+      } else {
+        photoGroup.classList.remove('hidden');
+        videoGroup.classList.add('hidden');
+      }
+    }
+
+    let pendingMediaBase64 = null;
+    function handleMediaFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        pendingMediaBase64 = evt.target.result;
+        document.getElementById('new-media-url').value = '';
+        showToast('Foto carregada do dispositivo! Clique em Adicionar à Galeria.', 'info');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleAddMedia(e) {
+      e.preventDefault();
+      const type = document.getElementById('new-media-type').value;
+      const title = document.getElementById('new-media-title').value.trim();
+
+      let url = '';
+      let thumb = null;
+
+      if (type === 'video') {
+        url = document.getElementById('new-video-url').value.trim();
+        if (!url) {
+          showToast('Informe o link do YouTube!', 'warning');
+          return;
+        }
+        const yId = extractYouTubeId(url);
+        if (yId) {
+          thumb = `https://img.youtube.com/vi/${yId}/hqdefault.jpg`;
+        }
+      } else {
+        url = pendingMediaBase64 || document.getElementById('new-media-url').value.trim();
+        if (!url) {
+          showToast('Por favor, informe a URL da foto ou selecione um arquivo.', 'warning');
+          return;
+        }
+      }
+
+      const newItem = {
+        id: 'm_' + Date.now(),
+        type: type,
+        title: title,
+        url: url,
+        thumbnail: thumb
+      };
+
+      appData.gallery.unshift(newItem);
+      saveAppData();
+      renderGallery();
+      renderAdminMediaList();
+
+      // Limpar formulário
+      document.getElementById('add-media-form').reset();
+      pendingMediaBase64 = null;
+      toggleMediaInputType('photo');
+      showToast('Mídia adicionada com sucesso à galeria!', 'success');
+    }
+
+    function deleteMedia(id) {
+      if (confirm('Deseja realmente remover esta mídia da galeria?')) {
+        appData.gallery = appData.gallery.filter(item => item.id !== id);
+        saveAppData();
+        renderGallery();
+        renderAdminMediaList();
+        showToast('Mídia removida.', 'info');
+      }
+    }
+
+    function renderAdminMediaList() {
+      const container = document.getElementById('admin-media-list');
+      const badge = document.getElementById('media-count-badge');
+      if (badge) badge.textContent = appData.gallery.length;
+      if (!container) return;
+
+      container.innerHTML = appData.gallery.map(item => {
+        const isVideo = item.type === 'video';
+        const isLocalVideo = isVideo && (item.url.includes('.mp4') || item.url.includes('/videos/'));
+        const img = item.thumbnail || (isVideo ? './assets/banda-principal.jpg' : item.url);
+
+        return `
+          <div class="p-3 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-between gap-3">
+            <div class="w-14 h-14 rounded-lg border border-zinc-800 shrink-0 overflow-hidden bg-black flex items-center justify-center relative">
+              ${item.thumbnail ? `
+                <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover">
+              ` : (isLocalVideo ? `
+                <video src="${escapeHtml(item.url)}#t=0.5" preload="metadata" muted class="w-full h-full object-cover"></video>
+              ` : `
+                <img src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover">
+              `)}
+              ${isVideo ? `
+                <span class="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              ` : ''}
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-[10px] uppercase font-bold text-amber-400">${item.type === 'video' ? 'Vídeo de Show' : 'Foto'}</span>
+              <h5 class="text-xs font-bold text-white truncate">${escapeHtml(item.title)}</h5>
+            </div>
+            <button onclick="deleteMedia('${item.id}')" class="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-zinc-900 transition-colors" title="Excluir">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Shows & Agenda Handlers
+    function refreshShowViews() {
+      saveAppData();
+      renderCalendar();
+      renderUpcomingShows();
+      renderAdminShowsTable();
+    }
+
+    function handleAddShow(e) {
+      e.preventDefault();
+      const date = document.getElementById('new-show-date').value;
+      const city = document.getElementById('new-show-city').value.trim();
+      const time = document.getElementById('new-show-time').value.trim() || 'A definir';
+      const venue = document.getElementById('new-show-venue').value.trim();
+      const isPrivate = document.getElementById('new-show-visibility').value === 'private';
+      const confirmed = document.getElementById('new-show-confirmed').value === 'confirmed';
+      const notes = document.getElementById('new-show-notes').value.trim();
+
+      if (!date || !venue) {
+        showToast('Informe a data e o local/nome do evento!', 'warning');
+        return;
+      }
+
+      // Impedir duas datas FECHADAS no mesmo dia
+      if (confirmed) {
+        const existing = appData.shows.find(s => s.date === date && isShowConfirmed(s));
+        if (existing) {
+          showToast(`Já existe um show fechado em ${formatDateDisplay(date)}!`, 'error');
+          return;
+        }
+      }
+
+      appData.shows.push({
+        id: 's_' + Date.now(),
+        date, city, time, venue, isPrivate, confirmed, notes
+      });
+
+      refreshShowViews();
+      document.getElementById('add-show-form').reset();
+      showToast(confirmed
+        ? `Show salvo! A data ${formatDateDisplay(date)} foi bloqueada no calendário.`
+        : `Show salvo como "em negociação". A data ${formatDateDisplay(date)} continua livre até você aprovar.`, 'success');
+    }
+
+    function toggleShowConfirmed(id) {
+      const show = appData.shows.find(s => s.id === id);
+      if (!show) return;
+      if (!isShowConfirmed(show)) {
+        const clash = appData.shows.find(s => s.id !== id && s.date === show.date && isShowConfirmed(s));
+        if (clash) {
+          showToast(`Já existe outro show fechado em ${formatDateDisplay(show.date)}.`, 'error');
+          return;
+        }
+      }
+      show.confirmed = !isShowConfirmed(show);
+      refreshShowViews();
+      showToast(show.confirmed
+        ? `Show aprovado! ${formatDateDisplay(show.date)} agora está bloqueada.`
+        : `Show voltou para "em negociação". ${formatDateDisplay(show.date)} está livre novamente.`, 'info');
+    }
+
+    function toggleShowPrivate(id) {
+      const show = appData.shows.find(s => s.id === id);
+      if (!show) return;
+      show.isPrivate = !show.isPrivate;
+      refreshShowViews();
+    }
+
+    function deleteShow(id) {
+      const show = appData.shows.find(s => s.id === id);
+      if (!show) return;
+
+      if (confirm(`Remover o show '${show.venue}' de ${formatDateDisplay(show.date)}? A data será liberada.`)) {
+        appData.shows = appData.shows.filter(s => s.id !== id);
+        refreshShowViews();
+        showToast(`Show removido. Data ${formatDateDisplay(show.date)} liberada!`, 'info');
+      }
+    }
+
+    function renderAdminShowsTable() {
+      const container = document.getElementById('admin-shows-table');
+      const badge = document.getElementById('shows-count-badge');
+      if (badge) badge.textContent = appData.shows.length;
+      if (!container) return;
+
+      const sorted = [...appData.shows].sort((a, b) => a.date.localeCompare(b.date));
+
+      if (sorted.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 text-center text-zinc-500 text-xs">
+            Nenhum show cadastrado. O calendário está totalmente livre!
+          </div>
+        `;
+        return;
+      }
+
+      const btn = 'px-3 py-1.5 rounded-lg border text-xs font-semibold transition-colors';
+      container.innerHTML = sorted.map(s => {
+        const ok = isShowConfirmed(s);
+        return `
+          <div class="p-3.5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 hover:bg-zinc-900/60 transition-colors">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-lg ${ok ? 'bg-red-500/10 border-red-500/30' : 'bg-amber-500/10 border-amber-500/30'} border flex items-center justify-center text-base shrink-0">
+                ${ok ? '🔒' : '⏳'}
+              </div>
+              <div class="min-w-0">
+                <div class="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
+                  <span>${formatDateDisplay(s.date)}</span>
+                  <span class="text-xs text-amber-400 font-semibold">• ${escapeHtml(s.time)}</span>
+                </div>
+                <div class="text-xs text-zinc-400 truncate">
+                  <strong class="text-zinc-200">${escapeHtml(s.venue)}</strong>${s.city ? ' — ' + escapeHtml(s.city) : ''}
+                </div>
+                ${s.notes ? `<div class="text-[11px] text-zinc-500 truncate">📝 ${escapeHtml(s.notes)}</div>` : ''}
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 lg:justify-end">
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${s.isPrivate ? 'bg-purple-500/10 text-purple-300 border-purple-500/30' : 'bg-sky-500/10 text-sky-300 border-sky-500/30'}">
+                ${s.isPrivate ? 'Particular' : 'Público'}
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${ok ? 'bg-red-500/10 text-red-300 border-red-500/30' : 'bg-amber-500/10 text-amber-300 border-amber-500/30'}">
+                ${ok ? 'Fechado (data bloqueada)' : 'Em negociação'}
+              </span>
+              <button onclick="toggleShowConfirmed('${s.id}')" class="${btn} ${ok ? 'bg-zinc-800 text-zinc-300 border-zinc-700/50 hover:text-white' : 'bg-emerald-600 text-white border-emerald-500 hover:bg-emerald-500'}">
+                ${ok ? 'Desaprovar' : '✓ Aprovar / Fechar'}
+              </button>
+              <button onclick="toggleShowPrivate('${s.id}')" class="${btn} bg-zinc-800 text-zinc-300 border-zinc-700/50 hover:text-white">
+                ${s.isPrivate ? 'Tornar público' : 'Tornar particular'}
+              </button>
+              <button onclick="deleteShow('${s.id}')" class="${btn} bg-zinc-800 hover:bg-red-950/40 text-zinc-400 hover:text-red-400 border-zinc-700/50">
+                Excluir
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================
+       9. UTILITÁRIOS (TOAST, ESCAPE, MENU MOBILE)
+    ========================================================= */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500 text-emerald-100',
+        error: 'bg-red-950/95 border-red-500 text-red-100',
+        warning: 'bg-amber-950/95 border-amber-500 text-amber-100',
+        info: 'bg-zinc-900/95 border-amber-500/50 text-zinc-100'
+      };
+
+      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-2xl backdrop-blur-md transition-all duration-300 transform translate-y-2 opacity-0 text-sm max-w-sm ${colors[type] || colors.info}`;
+      
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+      };
+
+      toast.innerHTML = `
+        <span class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs shrink-0">${icons[type] || '•'}</span>
+        <span class="flex-1 font-medium text-xs sm:text-sm leading-tight">${escapeHtml(message)}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-4');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger-icon');
+      const close = document.getElementById('close-icon');
+
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        hamburger.classList.add('hidden');
+        close.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+        hamburger.classList.remove('hidden');
+        close.classList.add('hidden');
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    /* =========================================================
+       10. INICIALIZAÇÃO DA APLICAÇÃO
+    ========================================================= */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Definir data mínima para hoje no input de data
+      const today = new Date().toISOString().split('T')[0];
+      const quoteDateInput = document.getElementById('quote-date');
+      const newShowDateInput = document.getElementById('new-show-date');
+      if (quoteDateInput) quoteDateInput.min = today;
+      if (newShowDateInput) newShowDateInput.min = today;
+
+      // Ano atual no rodapé
+      const yearSpan = document.getElementById('current-year');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Tecla ESC para fechar modais e lightbox
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLightbox(null, true);
+          closeAdminDashboard();
+          closeAdminLoginModal();
+        }
+      });
+
+      initBgMusic();
+
+      // Renderiza com os dados padrão e atualiza assim que o banco responder
+      renderAll();
+      loadRemoteData().then(ok => { if (ok) renderAll(); });
+    });
+  </script>
+</body>
+</html>
